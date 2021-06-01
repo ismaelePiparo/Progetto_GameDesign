@@ -374,9 +374,9 @@ Rigidbody:
   m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!4 &31594138 stripped
 Transform:
@@ -2433,6 +2433,10 @@ PrefabInstance:
       propertyPath: m_Target
       value: 
       objectReference: {fileID: 1116238008}
+    - target: {fileID: 11400002, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 3}
 --- !u!4 &326561312 stripped
@@ -7806,6 +7810,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118520701171118520, guid: e91637493e99f0d4dac9e3d7d68bc2e9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118520701171118520, guid: e91637493e99f0d4dac9e3d7d68bc2e9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118520701171118520, guid: e91637493e99f0d4dac9e3d7d68bc2e9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1118520701171118520, guid: e91637493e99f0d4dac9e3d7d68bc2e9,
         type: 3}
@@ -15702,26 +15721,26 @@ Transform:
   - {fileID: 169188772}
   - {fileID: 1149707234}
   - {fileID: 524314524}
-  - {fileID: 333338595}
-  - {fileID: 185452660}
-  - {fileID: 808950457}
+  - {fileID: 965329451}
+  - {fileID: 1499019854}
+  - {fileID: 1682324554}
   - {fileID: 1688130540}
   - {fileID: 2055279049}
   - {fileID: 2046610176}
   - {fileID: 2021517909}
   - {fileID: 929712644}
+  - {fileID: 333338595}
   - {fileID: 100053016}
   - {fileID: 1470794021}
-  - {fileID: 965329451}
+  - {fileID: 487162576}
   - {fileID: 286876733}
   - {fileID: 1484805360}
-  - {fileID: 1682324554}
   - {fileID: 816997884}
-  - {fileID: 1499019854}
+  - {fileID: 185452660}
   - {fileID: 484612208}
-  - {fileID: 487162576}
   - {fileID: 1392007786}
   - {fileID: 1649721055}
+  - {fileID: 808950457}
   - {fileID: 1557558832}
   - {fileID: 871777227}
   - {fileID: 643246524}
