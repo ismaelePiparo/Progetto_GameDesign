@@ -23,6 +23,7 @@ public class GuardSimple : MonoBehaviour
     private GuardState _currentGuardState;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
+    private bool _inCollider = true;
     
 
     void Start()
@@ -35,7 +36,8 @@ public class GuardSimple : MonoBehaviour
     void Update()
     {
         UpdateState();
-        CheckTransition();     
+        CheckTransition();
+        
     }
 
     private void UpdateState()
@@ -66,7 +68,7 @@ public class GuardSimple : MonoBehaviour
         switch (_currentGuardState)
         {
             case GuardState.Patrol:
-                if (IsTargetWithinDistance(_minChaseDistance))
+                if (IsTargetWithinDistance(_minChaseDistance) && _inCollider)
                     newGuardState = GuardState.Chase;
                 break;
             
@@ -82,6 +84,13 @@ public class GuardSimple : MonoBehaviour
                     newGuardState = GuardState.Attack;
                     break;
                 }
+                if (!_inCollider)
+                {
+                    newGuardState = GuardState.Patrol;
+                    break;
+                }
+
+
                 break;
             
             case GuardState.Attack:
@@ -95,7 +104,7 @@ public class GuardSimple : MonoBehaviour
 
         if (newGuardState != _currentGuardState)
         {
-            Debug.Log($"Changing State FROM:{_currentGuardState} --> TO:{newGuardState}");
+            //Debug.Log($"Changing State FROM:{_currentGuardState} --> TO:{newGuardState}");
             _currentGuardState = newGuardState;
         }
     }
@@ -104,7 +113,7 @@ public class GuardSimple : MonoBehaviour
     {
         if (IsTargetWithinDistance(_stoppingDistance))
         {
-            Debug.Log("Attacco!");
+            //Debug.Log("Attacco!");
             _navMeshAgent.isStopped = true;
             _animator.SetBool("walk", false);
             Vector3 targetDirection = _target.transform.position - transform.position;
@@ -118,10 +127,10 @@ public class GuardSimple : MonoBehaviour
 
     private void Work()
     {
-        Debug.Log("Work");
+        
         if (IsWorkWithinDistance(_stoppingDistance))
         {
-            Debug.Log("Lavoro!");
+            //Debug.Log("Lavoro!");
             _navMeshAgent.isStopped = true;
             _animator.SetBool("walk", false);
             Vector3 targetDirection = _workTarget.transform.position - transform.position;
@@ -142,10 +151,14 @@ public class GuardSimple : MonoBehaviour
 
     private void ReturnToWork()
     {
-        Debug.Log("ReturnToWork");
+        //Debug.Log("ReturnToWork");
         _navMeshAgent.isStopped = false;
         _animator.SetBool("walk", true);
         _navMeshAgent.SetDestination(_workTarget.transform.position);
+        if (IsWorkWithinDistance(_stoppingDistance*2))
+        {
+            _inCollider = true;
+        }
     }
 
     private bool IsTargetWithinDistance(float distance)
@@ -158,5 +171,14 @@ public class GuardSimple : MonoBehaviour
         return (_workTarget.transform.position - transform.position).sqrMagnitude <= distance * distance;
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Mission"))
+        {
+            _inCollider = false;
+            //Debug.Log("_inCollider" + _inCollider);
+        }
+    }
+   
 
 }
