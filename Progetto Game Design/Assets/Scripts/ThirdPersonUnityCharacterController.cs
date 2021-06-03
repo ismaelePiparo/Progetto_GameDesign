@@ -131,6 +131,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Colpita");
+
         }
 
     }
