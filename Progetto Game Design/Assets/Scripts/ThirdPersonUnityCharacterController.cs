@@ -31,6 +31,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     private float _defaultSpeed;
     private bool _playFlute=false;
     private bool _inCollider = false;
+    public static bool _playingFlute = false;
 
     void Start()
     {
@@ -48,11 +49,12 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Play_Flute"))
         {
             Debug.Log("Sto suonado");
+            _playingFlute = true;
         }
         else
         {
 
-
+            _playingFlute = false;
             
 
             if (_isGrounded && _velocity.y < 0f)
@@ -89,9 +91,10 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _velocity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
             }
 
-            if (Input.GetKey(KeyCode.Z) && _isGrounded && _inCollider)
+            if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
             {
                 _playFlute = true;
+                
             }
             else
             {

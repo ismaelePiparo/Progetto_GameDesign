@@ -11,7 +11,9 @@ public class GuardSimple : MonoBehaviour
     {
         Patrol,
         Chase,
-        Attack
+        Attack,
+        Hit,
+        Dead
     }
 
     [SerializeField] private GameObject _target;
@@ -19,11 +21,13 @@ public class GuardSimple : MonoBehaviour
     [SerializeField] private float _minChaseDistance = 3f;
     [SerializeField] private float _minAttackDistance = 2f;
     [SerializeField] private float _stoppingDistance = 1f;
+    [SerializeField] private int _lives = 3;
 
     private GuardState _currentGuardState;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     private bool _inCollider = true;
+    private bool _hit = false;
     
 
     void Start()
@@ -56,6 +60,13 @@ public class GuardSimple : MonoBehaviour
                 
                 Attack();
                 break;
+            case GuardState.Hit:
+
+                Hit();
+                break;
+            case GuardState.Dead:
+                break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -69,7 +80,23 @@ public class GuardSimple : MonoBehaviour
         {
             case GuardState.Patrol:
                 if (IsTargetWithinDistance(_minChaseDistance) && _inCollider)
+                {
                     newGuardState = GuardState.Chase;
+                    break;
+                }
+
+                if (ThirdPersonUnityCharacterController._playingFlute)
+                {
+                    _lives--;
+                    newGuardState = GuardState.Hit;
+                    break;
+                }
+                if (_lives == 0)
+                {
+                    newGuardState = GuardState.Dead;
+                    break;
+                }
+
                 break;
             
             case GuardState.Chase:
@@ -89,15 +116,58 @@ public class GuardSimple : MonoBehaviour
                     newGuardState = GuardState.Patrol;
                     break;
                 }
+                if (ThirdPersonUnityCharacterController._playingFlute)
+                {
+                    _lives--;
+                    newGuardState = GuardState.Hit;
+                    break;
+                }
+                if (_lives == 0)
+                {
+                    newGuardState = GuardState.Dead;
+                    break;
+                }
 
 
                 break;
-            
+
+            case GuardState.Hit:
+                if (!ThirdPersonUnityCharacterController._playingFlute) 
+                {
+                    _animator.SetBool("hit", false);
+                    newGuardState = GuardState.Patrol;
+                }
+                if (_lives == 0)
+                {
+                    newGuardState = GuardState.Dead;
+                    break;
+                }
+
+                break;
+
             case GuardState.Attack:
                 if (!IsTargetWithinDistance(_stoppingDistance))
+                {
                     newGuardState = GuardState.Chase;
+                    break;
+                }
+                if (ThirdPersonUnityCharacterController._playingFlute)
+                {
+                    _lives--;
+                    newGuardState = GuardState.Hit;
+                    break;
+                }
+                if (_lives == 0)
+                {
+                    newGuardState = GuardState.Dead;
+                    break;
+                }
                 break;
-            
+
+            case GuardState.Dead:
+                Debug.Log("Operaio Sconfitto!");
+                break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -155,10 +225,30 @@ public class GuardSimple : MonoBehaviour
         _navMeshAgent.isStopped = false;
         _animator.SetBool("walk", true);
         _navMeshAgent.SetDestination(_workTarget.transform.position);
-        if (IsWorkWithinDistance(_stoppingDistance*2))
+        if (IsWorkWithinDistance(_stoppingDistance*6))
         {
             _inCollider = true;
         }
+    }
+
+    private void Hit()
+    {
+       
+        Debug.Log(_lives);
+
+        _navMeshAgent.isStopped = true;
+        if (_lives == 0 && ThirdPersonUnityCharacterController._playingFlute)
+        {
+            _animator.SetBool("hit", true);
+            _animator.SetBool("dead", true);
+            
+        }
+        
+        if (ThirdPersonUnityCharacterController._playingFlute)
+        {
+            _animator.SetBool("hit", true);
+        }
+        
     }
 
     private bool IsTargetWithinDistance(float distance)
