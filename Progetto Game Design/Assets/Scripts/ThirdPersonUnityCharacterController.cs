@@ -29,7 +29,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     private bool _isRun = false;
     private float _defaultSpeed;
-    private bool _playFlute=false;
+    public static bool _playFlute=false;
     private bool _inCollider = false;
     public static bool _playingFlute = false;
 

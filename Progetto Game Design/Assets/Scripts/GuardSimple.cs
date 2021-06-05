@@ -27,7 +27,7 @@ public class GuardSimple : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     private bool _inCollider = true;
-    private bool _hit = false;
+ 
     
 
     void Start()
