@@ -27,6 +27,7 @@ public class GuardSimple : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     private bool _inCollider = true;
+    public static bool _isDied = false;
  
     
 
@@ -41,7 +42,12 @@ public class GuardSimple : MonoBehaviour
     {
         UpdateState();
         CheckTransition();
-        
+        Debug.Log("vite: " + _lives);
+        if (KeySequence._decreaseLives)
+        {
+            _lives--;
+        }
+     
     }
 
     private void UpdateState()
@@ -87,10 +93,11 @@ public class GuardSimple : MonoBehaviour
 
                 if (ThirdPersonUnityCharacterController._playingFlute)
                 {
-                    _lives--;
+                    
                     newGuardState = GuardState.Hit;
                     break;
                 }
+                
                 if (_lives == 0)
                 {
                     newGuardState = GuardState.Dead;
@@ -118,7 +125,6 @@ public class GuardSimple : MonoBehaviour
                 }
                 if (ThirdPersonUnityCharacterController._playingFlute)
                 {
-                    _lives--;
                     newGuardState = GuardState.Hit;
                     break;
                 }
@@ -136,6 +142,7 @@ public class GuardSimple : MonoBehaviour
                 {
                     _animator.SetBool("hit", false);
                     newGuardState = GuardState.Patrol;
+                    break;
                 }
                 if (_lives == 0)
                 {
@@ -153,7 +160,6 @@ public class GuardSimple : MonoBehaviour
                 }
                 if (ThirdPersonUnityCharacterController._playingFlute)
                 {
-                    _lives--;
                     newGuardState = GuardState.Hit;
                     break;
                 }
@@ -166,6 +172,15 @@ public class GuardSimple : MonoBehaviour
 
             case GuardState.Dead:
                 Debug.Log("Operaio Sconfitto!");
+                if (ThirdPersonUnityCharacterController._playingFlute)
+                {
+                    _animator.SetBool("hit", true);
+                }
+                else
+                {
+                    _animator.SetBool("dead", true);
+                }
+                _isDied = true;
                 break;
 
             default:
@@ -234,21 +249,19 @@ public class GuardSimple : MonoBehaviour
     private void Hit()
     {
        
-        Debug.Log(_lives);
-
         _navMeshAgent.isStopped = true;
-        if (_lives == 0 && ThirdPersonUnityCharacterController._playingFlute)
+
+        /*if (_lives == 0 && ThirdPersonUnityCharacterController._playingFlute)
         {
             _animator.SetBool("hit", true);
             _animator.SetBool("dead", true);
             
-        }
+        }*/
         
         if (ThirdPersonUnityCharacterController._playingFlute)
         {
             _animator.SetBool("hit", true);
-        }
-        
+        }      
     }
 
     private bool IsTargetWithinDistance(float distance)
@@ -269,6 +282,6 @@ public class GuardSimple : MonoBehaviour
             //Debug.Log("_inCollider" + _inCollider);
         }
     }
-   
 
+    
 }

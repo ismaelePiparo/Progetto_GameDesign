@@ -42,7 +42,6 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     
     void Update()
     {
-
         //Ground Check
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
@@ -94,11 +93,12 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
             {
                 _playFlute = true;
-                
+                _animator.SetBool("dead", true);
             }
             else
             {
                 _playFlute = false;
+                _animator.SetBool("dead", false);
             }
 
 
@@ -151,7 +151,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        _animator.SetBool("dead", _playFlute);
+        
         if (!_isGrounded)
         {
             _animator.SetFloat("speed", 0f);

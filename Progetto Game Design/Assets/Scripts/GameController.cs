@@ -7,13 +7,16 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private List<GameObject> _lives;
     [SerializeField] private GameObject _pentagram;
-    private int i;
+    [SerializeField] private List<GameObject> _notes;
+
+    private int i,n;
     private int _time=5;
 
     // Start is called before the first frame update
     void Start()
     {
         i = _lives.Count;
+        n = _notes.Count;
         Debug.Log(i);
     }
 
@@ -26,17 +29,21 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0.5f;
             StartCoroutine("Note");
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        if (!_pentagram.activeSelf)
         {
-            Debug.Log("T");
+            for (int j = 0; j < n; j++)
+            {
+                _notes[j].SetActive(false);
+            }
         }
-        
+
+
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            if (i != 0 && !ChangeColor._safe)
+            if (i != 0 && !ChangeColor._safe && !GuardSimple._isDied)
             {
                 _lives[i - 1].SetActive(false);
                 i--;

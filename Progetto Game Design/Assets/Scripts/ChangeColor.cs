@@ -34,12 +34,7 @@ public class ChangeColor : MonoBehaviour
 
     void Update()
     {
-        // StartCoroutine to flash GameObject
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            _count = 10;
-            StartCoroutine("Timer");
-        }
+       
     }
 
     public IEnumerator HitFlash()
@@ -100,7 +95,7 @@ public class ChangeColor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && !_safe)
+        if (other.CompareTag("Enemy") && !_safe && !GuardSimple._isDied)
         {
             _count = 10;
             StartCoroutine("Timer");
