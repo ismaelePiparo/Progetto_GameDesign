@@ -279,7 +279,7 @@ public class GuardSimple : MonoBehaviour
         if (other.CompareTag("Mission"))
         {
             _inCollider = false;
-            //Debug.Log("_inCollider" + _inCollider);
+            Debug.Log("_inCollider" + _inCollider);
         }
     }
 
