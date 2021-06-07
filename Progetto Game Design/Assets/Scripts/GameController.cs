@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<GameObject> _lives;
     [SerializeField] private GameObject _pentagram;
     [SerializeField] private List<GameObject> _notes;
+    
 
     private int i,n;
     private int _time=5;
@@ -48,7 +49,7 @@ public class GameController : MonoBehaviour
                 _lives[i - 1].SetActive(false);
                 i--;
             }
-            else
+            else if (i==0) 
             {
                 Debug.Log("sei morto!");
             }

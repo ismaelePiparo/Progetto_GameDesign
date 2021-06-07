@@ -42,12 +42,22 @@ public class GuardSimple : MonoBehaviour
     {
         UpdateState();
         CheckTransition();
-        Debug.Log("vite: " + _lives);
+        //Debug.Log("vite: " + _lives);
         if (KeySequence._decreaseLives)
         {
             _lives--;
         }
-     
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"))
+        {
+            
+            _isDied = true;
+            
+        }
+        if (_isDied)
+        {
+            StartCoroutine("Deactivate");
+        }
+
     }
 
     private void UpdateState()
@@ -180,7 +190,7 @@ public class GuardSimple : MonoBehaviour
                 {
                     _animator.SetBool("dead", true);
                 }
-                _isDied = true;
+                
                 break;
 
             default:
@@ -281,6 +291,14 @@ public class GuardSimple : MonoBehaviour
             _inCollider = false;
             Debug.Log("_inCollider" + _inCollider);
         }
+    }
+
+    public IEnumerator Deactivate()
+    {
+
+        yield return new WaitForSecondsRealtime(4);
+        this.gameObject.SetActive(false);
+
     }
 
     
