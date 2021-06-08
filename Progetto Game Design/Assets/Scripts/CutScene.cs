@@ -10,9 +10,8 @@ public class CutScene : MonoBehaviour
     [SerializeField] private GameObject _mainCam;
     [SerializeField] private GameObject _cutScene1;
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private VideoClip[] videos = new VideoClip[5];
 
-    [SerializeField] private  List<GameObject> _operai;
+    //[SerializeField] private  List<GameObject> _operai;
 
     [SerializeField] private VideoClip Tutorial_1;
     [SerializeField] private VideoClip Tutorial_2;
@@ -24,6 +23,7 @@ public class CutScene : MonoBehaviour
 
     private VideoPlayer vp;
     private int _lenght,_op;
+    private bool _skipFinal = false;
 
 
     
@@ -33,22 +33,13 @@ public class CutScene : MonoBehaviour
     void Start()
     {
         vp = _cutScene1.GetComponent<VideoPlayer>();
-        if (_operai.Count !=0)
-        {
-            _op = _operai.Count;
-
-        }
-        else
-        {
-            Debug.Log("no operai in scena");
-        }
-       
-        
+            
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
+        Time.timeScale = 1;
         if (sceneName == "Tutorial_1")
         {
-            StartCoroutine("StartCutScene", 0);
+            StartCoroutine("StartCutScene", Tutorial_1);
         }
         
     }
@@ -56,57 +47,64 @@ public class CutScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (_op != 0)
+
+        if (Input.GetKeyDown(KeyCode.Return) && !KeySequence._isCorrect)
         {
-            int count = _operai.Count(item => item.gameObject.GetComponent<GuardSimple>()._isDied);
-            int attivi = _operai.Count(item => !item.activeSelf);
-
-
-            if (!ThirdPersonUnityCharacterController._playingFlute && KeySequence._isCorrect)
+            if (_skipFinal)
             {
-                Time.timeScale = 0;
-                StartCoroutine("StartCutScene", 2);
+                SceneManager.LoadScene("Tutorial_2");
             }
-            
-            if (Input.GetKeyDown(KeyCode.Return) && !KeySequence._isCorrect)
+            else
             {
-                if (count == _op)
-                {
-                    Debug.Log("Skippo il finale");
-                    SceneManager.LoadScene("Tutorial_2");
-
-                }
-                else
-                {
-                    StopCoroutine("StartCutScene");
-                    _mainCam.SetActive(true);
-                    _cutScene1.SetActive(false);
-                    _canvas.SetActive(true);
-                }
-
-            }
-
-
-
-
-            if (attivi == _op)
-            {
-                
-                Debug.Log("tutti gli operai sono morti!");
-                StartCoroutine("StartEndScene", 1);
+                Time.timeScale = 1;
+                StopCoroutine("StartCutScene");
+                _mainCam.SetActive(true);
+                _cutScene1.SetActive(false);
+                _canvas.SetActive(true);
             }
 
         }
     }
 
-    IEnumerator StartCutScene(int a)
+    public void LaunchCutScene(string i)
+    {
+        
+        if (string.Equals(i, "flash"))
+        {
+            Time.timeScale = 0;
+            StartCoroutine("StartCutScene", Lampo);
+        }
+        if (string.Equals(i, "wind"))
+        {
+            Time.timeScale = 0;
+            StartCoroutine("StartCutScene", Vento);
+        }
+        if (string.Equals(i, "quake"))
+        {
+            Time.timeScale = 0;
+            StartCoroutine("StartCutScene", Terremoto);
+        }
+        if (string.Equals(i, "rise"))
+        {
+            Time.timeScale = 0;
+            StartCoroutine("StartCutScene", Albero);
+        }
+        if (string.Equals(i, "end"))
+        {
+            Time.timeScale = 0;
+            _skipFinal = true;
+            StartCoroutine("StartEndScene", Tutorial_2);
+        }
+    }
+
+
+    IEnumerator StartCutScene(VideoClip a)
     {
         _canvas.SetActive(false);
         _mainCam.SetActive(false);
         _cutScene1.SetActive(true);
-        vp.clip = videos[a];
-        _lenght = (int) videos[a].length;
+        vp.clip = a;
+        _lenght = (int) a.length;
         vp.Play();
         yield return new WaitForSecondsRealtime(_lenght-0.5f);
         KeySequence._isCorrect = false;
@@ -116,41 +114,21 @@ public class CutScene : MonoBehaviour
         _canvas.SetActive(true);
     }
 
-    IEnumerator StartEndScene(int a)
+    IEnumerator StartEndScene(VideoClip a)
     {
         _canvas.SetActive(false);
         _mainCam.SetActive(false);
         _cutScene1.SetActive(true);
-        vp.clip = videos[a];
-        _lenght = (int)videos[a].length;
+        vp.clip = a;
+        _lenght = (int)a.length;
         vp.Play();
-        yield return new WaitForSecondsRealtime(_lenght+10);
+        yield return new WaitForSecondsRealtime(_lenght);
         KeySequence._isCorrect = false;
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Tutorial_2");
         _mainCam.SetActive(true);
         _cutScene1.SetActive(false);
         _canvas.SetActive(true);
-        SceneManager.LoadScene("Tutorial_2");
-
     }
 
-
-
-
-
-
-
-
-
-
-
-    IEnumerator StartCutSene()
-    {
-        _mainCam.SetActive(false);
-        _cutScene1.SetActive(true);
-        yield return new WaitForSecondsRealtime(3);
-        KeySequence._isCorrect = false;
-        Time.timeScale = 1;
-        _mainCam.SetActive(true);
-        _cutScene1.SetActive(false);
-    }
 }

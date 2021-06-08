@@ -49,7 +49,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Play_Flute"))
         {
-            Debug.Log("Sto suonado");
+            //Debug.Log("Sto suonado");
 
             
             _playingFlute = true;
@@ -94,7 +94,6 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
             {
                 //_animator.SetBool("dead", true);
-                Debug.Log("Lancio animazione flauto");
                 _playFlute = true;
             }
             else
@@ -130,30 +129,31 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Mission1"))
+        if (other.CompareTag("Mission"))
         {
             //Debug.Log("sono dentro il collider");
-            _IDtarget = 1;
+            _IDtarget = other.gameObject.GetComponent<MissionID>().ID;
             _inCollider = true;
-            Debug.Log("operaio da Colpire: "+_IDtarget);
+            //Debug.Log("operaio da Colpire: "+_IDtarget);
+            //Debug.Log("operaio da Colpire: " + other.gameObject.GetComponent<MissionID>().ID);
         }
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("Colpita");
-        }      
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    Debug.Log("Colpita");
+        //}      
 
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Mission1"))
-        {
-            //Debug.Log("sono fuori il collider");
-            _IDtarget = 0;
-            Debug.Log("ID Target: " + _IDtarget);
-            _inCollider = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Mission1"))
+    //    {
+    //        //Debug.Log("sono fuori il collider");
+    //        _IDtarget = 0;
+    //        Debug.Log("ID Target: " + _IDtarget);
+    //        _inCollider = false;
+    //    }
+    //}
 
 
     private void UpdateAnimations()

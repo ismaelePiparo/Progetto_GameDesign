@@ -22,7 +22,7 @@ public class GuardSimple : MonoBehaviour
     [SerializeField] private float _minAttackDistance = 2f;
     [SerializeField] private float _stoppingDistance = 1f;
     [SerializeField] private int _lives = 3;
-    [SerializeField] private int _id = 1;
+    
 
     private GuardState _currentGuardState;
     private NavMeshAgent _navMeshAgent;
@@ -33,6 +33,8 @@ public class GuardSimple : MonoBehaviour
 
     private BoxCollider[] children;
 
+    private int _id = 0;
+
 
     void Start()
     {
@@ -40,14 +42,16 @@ public class GuardSimple : MonoBehaviour
         _currentGuardState = GuardState.Patrol;
         _animator = GetComponent<Animator>();
         children = GetComponentsInChildren<BoxCollider>();
+        _id = GetComponentInParent<MissionID>().ID;
     }
 
     void Update()
     {
+        //Debug.Log("IdOperaio " + _id);
         UpdateState();
         CheckTransition();
         //Debug.Log("vite: " + _lives);
-        if (KeySequence._decreaseLives && ThirdPersonUnityCharacterController._IDtarget==_id)
+        if (GameController._decreaseLife && ThirdPersonUnityCharacterController._IDtarget==_id)
         {
             _lives--;
         }
@@ -189,7 +193,7 @@ public class GuardSimple : MonoBehaviour
                 break;
 
             case GuardState.Dead:
-                Debug.Log("Operaio Sconfitto!");
+                Debug.Log("Operaio con ID: "+_id+" Sconfitto!");
                 if (ThirdPersonUnityCharacterController._playingFlute)
                 {
                     _animator.SetBool("hit", true);
@@ -294,7 +298,7 @@ public class GuardSimple : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Mission"+_id))
+        if (other.CompareTag("Mission"))
         {
             _inCollider = false;
             Debug.Log("_inCollider" + _inCollider);
