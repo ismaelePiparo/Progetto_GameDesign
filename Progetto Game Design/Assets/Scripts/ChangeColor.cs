@@ -95,7 +95,7 @@ public class ChangeColor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && !_safe && !GuardSimple._isDied)
+        if (other.CompareTag("Enemy") && !_safe)
         {
             _count = 10;
             StartCoroutine("Timer");

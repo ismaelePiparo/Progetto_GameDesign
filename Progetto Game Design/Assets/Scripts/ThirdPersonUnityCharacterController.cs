@@ -33,6 +33,8 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     private bool _inCollider = false;
     public static bool _playingFlute = false;
 
+    public static int _operaioDaColpire = 0;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -126,23 +128,27 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Mission"))
+        if (other.CompareTag("Mission1"))
         {
             //Debug.Log("sono dentro il collider");
+            _operaioDaColpire = 1;
             _inCollider = true;
+            Debug.Log("operaio da Colpire: "+_operaioDaColpire);
         }
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Colpita");
-        }
+        }      
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Mission"))
+        if (other.CompareTag("Mission1"))
         {
             //Debug.Log("sono fuori il collider");
+            _operaioDaColpire = 0;
+            Debug.Log("operaio da Colpire: " + _operaioDaColpire);
             _inCollider = false;
         }
     }

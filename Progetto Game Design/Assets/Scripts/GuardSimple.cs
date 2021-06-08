@@ -22,20 +22,24 @@ public class GuardSimple : MonoBehaviour
     [SerializeField] private float _minAttackDistance = 2f;
     [SerializeField] private float _stoppingDistance = 1f;
     [SerializeField] private int _lives = 3;
+    [SerializeField] private int _id = 1;
 
     private GuardState _currentGuardState;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     private bool _inCollider = true;
-    public static bool _isDied = false;
- 
-    
+    public  bool _isDied = false;
+
+
+    private BoxCollider[] children;
+
 
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _currentGuardState = GuardState.Patrol;
         _animator = GetComponent<Animator>();
+        children = GetComponentsInChildren<BoxCollider>();
     }
 
     void Update()
@@ -43,7 +47,7 @@ public class GuardSimple : MonoBehaviour
         UpdateState();
         CheckTransition();
         //Debug.Log("vite: " + _lives);
-        if (KeySequence._decreaseLives)
+        if (KeySequence._decreaseLives && ThirdPersonUnityCharacterController._operaioDaColpire==_id)
         {
             _lives--;
         }
@@ -55,6 +59,10 @@ public class GuardSimple : MonoBehaviour
         }
         if (_isDied)
         {
+            foreach (BoxCollider box in children)
+            {
+                box.isTrigger=false;
+            }
             StartCoroutine("Deactivate");
         }
 
@@ -286,7 +294,7 @@ public class GuardSimple : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Mission"))
+        if (other.CompareTag("Mission"+_id))
         {
             _inCollider = false;
             Debug.Log("_inCollider" + _inCollider);
@@ -296,7 +304,7 @@ public class GuardSimple : MonoBehaviour
     public IEnumerator Deactivate()
     {
 
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSecondsRealtime(5);
         this.gameObject.SetActive(false);
 
     }

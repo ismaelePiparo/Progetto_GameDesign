@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            if (i != 0 && !ChangeColor._safe && !GuardSimple._isDied)
+            if (i != 0 && !ChangeColor._safe)
             {
                 _lives[i - 1].SetActive(false);
                 i--;
