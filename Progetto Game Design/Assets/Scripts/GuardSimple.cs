@@ -47,7 +47,7 @@ public class GuardSimple : MonoBehaviour
         UpdateState();
         CheckTransition();
         //Debug.Log("vite: " + _lives);
-        if (KeySequence._decreaseLives && ThirdPersonUnityCharacterController._operaioDaColpire==_id)
+        if (KeySequence._decreaseLives && ThirdPersonUnityCharacterController._IDtarget==_id)
         {
             _lives--;
         }

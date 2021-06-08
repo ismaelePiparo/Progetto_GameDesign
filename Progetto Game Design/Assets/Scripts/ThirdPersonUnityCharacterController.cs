@@ -33,7 +33,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     private bool _inCollider = false;
     public static bool _playingFlute = false;
 
-    public static int _operaioDaColpire = 0;
+    public static int _IDtarget = 0;
 
     void Start()
     {
@@ -50,7 +50,10 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Play_Flute"))
         {
             Debug.Log("Sto suonado");
+
+            
             _playingFlute = true;
+
         }
         else
         {
@@ -71,10 +74,6 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             _inputVector = new Vector3(h, 0, v);
             _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
-
-            UpdateAnimations();
-
-
             //Compute direction According to Camera Orientation
             _targetDirection = _cameraT.TransformDirection(_inputVector).normalized;
             _targetDirection.y = 0f;
@@ -94,13 +93,14 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
             {
+                //_animator.SetBool("dead", true);
+                Debug.Log("Lancio animazione flauto");
                 _playFlute = true;
-                _animator.SetBool("dead", true);
             }
             else
             {
                 _playFlute = false;
-                _animator.SetBool("dead", false);
+                //_animator.SetBool("dead", false);
             }
 
 
@@ -120,6 +120,8 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _speed = _defaultSpeed;
                 _isRun = false;
             }
+
+            UpdateAnimations();
         }
 
 
@@ -131,9 +133,9 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         if (other.CompareTag("Mission1"))
         {
             //Debug.Log("sono dentro il collider");
-            _operaioDaColpire = 1;
+            _IDtarget = 1;
             _inCollider = true;
-            Debug.Log("operaio da Colpire: "+_operaioDaColpire);
+            Debug.Log("operaio da Colpire: "+_IDtarget);
         }
         if (other.CompareTag("Enemy"))
         {
@@ -147,8 +149,8 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         if (other.CompareTag("Mission1"))
         {
             //Debug.Log("sono fuori il collider");
-            _operaioDaColpire = 0;
-            Debug.Log("operaio da Colpire: " + _operaioDaColpire);
+            _IDtarget = 0;
+            Debug.Log("ID Target: " + _IDtarget);
             _inCollider = false;
         }
     }
@@ -156,6 +158,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     private void UpdateAnimations()
     {
+
         
         if (!_isGrounded)
         {
@@ -173,6 +176,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _animator.SetFloat("speed", _inputSpeed);
             }          
         }
+        _animator.SetBool("dead", _playFlute);
         
         
     }

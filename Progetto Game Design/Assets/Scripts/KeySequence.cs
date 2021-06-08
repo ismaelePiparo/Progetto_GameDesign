@@ -12,8 +12,11 @@ public class KeySequence : MonoBehaviour
          KeyCode.H
     };
     private int sequenceIndex;
+
     public static bool _isCorrect = false;
     public static bool _decreaseLives = false;
+    public static bool _cureTree = false;
+
     [SerializeField] private GameObject _pentagram;
     [SerializeField] private List<GameObject> _notes;
 
@@ -41,9 +44,14 @@ public class KeySequence : MonoBehaviour
             }
             c--;
         }
-        else if (Input.anyKeyDown) 
+        else if (Input.anyKeyDown || !_pentagram.activeSelf) 
         {
+            for (int j = 0; j < i; j++)
+            {
+                _notes[j].SetActive(false);
+            }
             i = _notes.Count;
+            c = i;
             sequenceIndex = 0;
         }
        

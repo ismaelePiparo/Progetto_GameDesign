@@ -7,7 +7,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private List<GameObject> _lives;
     [SerializeField] private GameObject _pentagram;
-    [SerializeField] private List<GameObject> _notes;
+    [SerializeField] private GameObject _musicSheet;
+    //[SerializeField] private List<GameObject> _notes;
     
 
     private int i,n;
@@ -17,25 +18,39 @@ public class GameController : MonoBehaviour
     void Start()
     {
         i = _lives.Count;
-        n = _notes.Count;
-        Debug.Log(i);
+        //n = _notes.Count;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (ThirdPersonUnityCharacterController._playFlute)
         {
+            Debug.Log("Apro pentagramma");
             _time = 5;
             Time.timeScale = 0.5f;
             StartCoroutine("Note");
         }
-        if (!_pentagram.activeSelf)
+
+
+        // se il pentagramma è spento Spegne le note
+        //if (!_pentagram.activeSelf)
+        //{
+        //    for (int j = 0; j < n; j++)
+        //    {
+        //        _notes[j].SetActive(false);
+        //    }
+        //}
+
+        if(Input.GetKeyDown(KeyCode.Tab) && !ThirdPersonUnityCharacterController._playingFlute && !_musicSheet.activeSelf)
         {
-            for (int j = 0; j < n; j++)
-            {
-                _notes[j].SetActive(false);
-            }
+            Time.timeScale = 0;
+            _musicSheet.SetActive(true);
+        }else if (_musicSheet.activeSelf && Input.GetKeyDown(KeyCode.Tab))
+        {
+            Time.timeScale = 1;
+            _musicSheet.SetActive(false);
         }
 
 
@@ -52,6 +67,7 @@ public class GameController : MonoBehaviour
             else if (i==0) 
             {
                 Debug.Log("sei morto!");
+                Time.timeScale = 0;
             }
         }
     }
