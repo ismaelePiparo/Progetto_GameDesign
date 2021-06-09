@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThirdPersonUnityCharacterController : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     [SerializeField] private float _jumpHeight = 3f;
 
     [SerializeField] private Animator _animator;
+
+    [SerializeField] private Image FluteIcon;
+    [SerializeField] private int _timeFlute=5;
 
 
     private CharacterController _characterController;
@@ -35,28 +39,42 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     public static int _IDtarget = 0;
 
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _defaultSpeed = _speed;
+        
     }
 
     
     void Update()
     {
+        
         //Ground Check
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Play_Flute"))
         {
             //Debug.Log("Sto suonado");
+            //float color=FluteIcon.color.a;
+            //Debug.Log("color.a " + color);
+            //color = 0;
 
-            
+            SetOpacity(0);
+         
             _playingFlute = true;
+
+            ;
 
         }
         else
         {
+
+            if (FluteIcon.color.a == 0)
+            {
+                StartCoroutine("RestartFlute", FluteIcon.color.a);
+            }
 
             _playingFlute = false;
             
@@ -91,12 +109,13 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _velocity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
             }
 
+            //FLAUTO
             if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
             {
                 //_animator.SetBool("dead", true);
                 _playFlute = true;
             }
-            else
+            else 
             {
                 _playFlute = false;
                 //_animator.SetBool("dead", false);
@@ -178,6 +197,27 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         }
         _animator.SetBool("dead", _playFlute);
         
+        
+    }
+
+    public void SetOpacity(float a)
+    {
+        var tempColor = FluteIcon.color;
+        tempColor.a = a;
+        FluteIcon.color = tempColor;
+    }
+
+    IEnumerator RestartFlute(float a)
+    {
+        
+        while (a != 1)
+        {
+            a = a + 0.2f;
+           
+            SetOpacity(a);
+            yield return new WaitForSecondsRealtime(1);
+        }
+        yield break;
         
     }
 }

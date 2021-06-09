@@ -12,24 +12,33 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _musicSheet;
     [SerializeField] private CutScene _cutScene;
     [SerializeField] private List<GameObject> _operai;
+    [SerializeField] private List<GameObject> _tree;
+    [SerializeField] private int tempoDiGioco=0;
+    [SerializeField] private GameObject MascheraAlbero;
     //[SerializeField] private List<GameObject> _notes;
 
 
     private int i,n;
     private int _time=5;
     public static bool _decreaseLife = false;
+    public static bool _alberoCurato = false;
     private string video;
     private int _opInScene;
+    private int _treeInScene;
 
 
-    
+
     private string sceneName;
 
     // Start is called before the first frame update
     void Start()
     {
         i = _lives.Count;
-        //n = _notes.Count;
+
+        InvokeRepeating("ChangePosition", 0,2);
+
+
+
         if (_operai.Count != 0)
         {
             _opInScene = _operai.Count;
@@ -38,29 +47,47 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            Debug.Log("no operai in scena");
+            Debug.Log("No operai in scena");
+        }
+        if (_tree.Count != 0)
+        {
+            _treeInScene = _tree.Count;
+            Debug.Log(_treeInScene + " alberi in scena");
+
+        }
+        else
+        {
+            Debug.Log("No alberi in scena");
         }
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         _decreaseLife = false;
+        _alberoCurato = false;
 
         int _opSconfitti = _operai.Count(item => !item.activeSelf);
-        //int count = _operai.Count(item => item.gameObject.GetComponent<GuardSimple>()._isDied);
-
-        Debug.Log("Operai Sconfitti" + _opSconfitti);
-        
+        int _alberiCurati = _tree.Count(item => item.gameObject.GetComponent<TreeRise>()._foglieAttive);
+       
+        //SE TUTTI GLI OPERAI SONO STATI SCONFITTI O GLI ALBERI CURATI LANCIA LA CUTSCENE FINALE
         if(sceneName=="Tutorial_1" && _opSconfitti == _opInScene)
         {
             _cutScene.LaunchCutScene("end");
             return;
         }
+        if (sceneName == "Tutorial_2" && _alberiCurati == _treeInScene)
+        {
+            _cutScene.LaunchCutScene("end");
+            return;
+        }
 
+
+        //SE PAN SUONA IL FLAUTO LANCIA LA CORUTINE DEL PENTAGRAMMA
         if (ThirdPersonUnityCharacterController._playFlute)
         {
             _time = 5;
@@ -68,24 +95,33 @@ public class GameController : MonoBehaviour
             StartCoroutine("Note");
         }
 
+        //SE LA SEQUENZA é CORRETTA SPEGNE IL PENTAGRAMMA DECREMENTA LA VITA/CURA L'ALBERO E IMPOSTA LA CUTSCENE DA LANCIARE
         if (KeySequence._isCorrect && _pentagram.activeSelf)
         {
             StopCoroutine("Note");
             Time.timeScale = 1;
             video = KeySequence._mossa;
-            _decreaseLife = true;
+            if (_operai.Count != 0)
+            {
+                _decreaseLife = true;
+            }
+            else if(_tree.Count!=0)
+            {
+                Debug.Log("hai curato l'albero!");
+                _alberoCurato = true;
+            }
             _pentagram.SetActive(false);
         }
 
-        // se il pentagramma è spento Spegne le note
-        //if (!_pentagram.activeSelf)
-        //{
-        //    for (int j = 0; j < n; j++)
-        //    {
-        //        _notes[j].SetActive(false);
-        //    }
-        //}
+        //SE LA SEQUENZA é CORRETT E PAN HA FINITO DI SUONARE LANCIA LA CUTSCENE
+        if (KeySequence._isCorrect && !ThirdPersonUnityCharacterController._playingFlute)
+        {
+            KeySequence._isCorrect = false;
+            //Debug.Log("Sequenza Corretta; "+ KeySequence._mossa);
+            _cutScene.LaunchCutScene(video);
+        }
 
+        //GESTIONE DEL TAB
         if (Input.GetKeyDown(KeyCode.Tab) && !ThirdPersonUnityCharacterController._playingFlute && !_musicSheet.activeSelf)
         {
             Time.timeScale = 0;
@@ -96,19 +132,15 @@ public class GameController : MonoBehaviour
             _musicSheet.SetActive(false);
         }
 
-        if (KeySequence._isCorrect && !ThirdPersonUnityCharacterController._playingFlute)
-        {
-            KeySequence._isCorrect = false;
-            //Debug.Log("Sequenza Corretta; "+ KeySequence._mossa);
-             _cutScene.LaunchCutScene(video);
-        }
-
         
 
-        
+
+
+
 
 
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -128,14 +160,24 @@ public class GameController : MonoBehaviour
 
     public IEnumerator Note()
     {
+
+        yield return new WaitForSecondsRealtime(1);
+        if (!ThirdPersonUnityCharacterController._playingFlute)
+        {
+            Time.timeScale = 1;
+            yield break;//Stop coroutine
+        }
+
         while (_time >= 0)
         {
+            
             _time--;//Total time in seconds, countdown
             _pentagram.SetActive(true);
             if (_time == 0)
             {
                 _pentagram.SetActive(false);
                 Time.timeScale = 1;
+                
                 yield break;//Stop coroutine
             }
             else if (_time > 0)
@@ -145,4 +187,21 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+
+    void ChangePosition()
+    {
+        
+        //Compute position for next time
+        Vector3 spwanPosition = new Vector3(0, 1, 0);
+        MascheraAlbero.transform.localPosition = MascheraAlbero.transform.localPosition - spwanPosition;
+        if (MascheraAlbero.transform.localPosition.y < 25) 
+        {
+            Time.timeScale = 0;
+        }
+        
+        
+    }
+
+
 }

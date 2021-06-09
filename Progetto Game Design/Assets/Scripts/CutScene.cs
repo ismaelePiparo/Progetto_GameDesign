@@ -106,7 +106,7 @@ public class CutScene : MonoBehaviour
         vp.clip = a;
         _lenght = (int) a.length;
         vp.Play();
-        yield return new WaitForSecondsRealtime(_lenght-0.5f);
+        yield return new WaitForSecondsRealtime(_lenght);
         KeySequence._isCorrect = false;
         Time.timeScale = 1;
         _mainCam.SetActive(true);
