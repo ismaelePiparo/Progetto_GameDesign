@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     //[SerializeField] private List<GameObject> _notes;
 
 
-    private int i,n;
+    private int i;
     private int _time=5;
     public static bool _decreaseLife = false;
     public static bool _alberoCurato = false;
@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     private int _opInScene;
     private int _treeInScene;
 
-
+    public static bool _colpita = false;
 
     private string sceneName;
 
@@ -73,17 +73,42 @@ public class GameController : MonoBehaviour
 
         int _opSconfitti = _operai.Count(item => !item.activeSelf);
         int _alberiCurati = _tree.Count(item => item.gameObject.GetComponent<TreeRise>()._foglieAttive);
-       
+
         //SE TUTTI GLI OPERAI SONO STATI SCONFITTI O GLI ALBERI CURATI LANCIA LA CUTSCENE FINALE
-        if(sceneName=="Tutorial_1" && _opSconfitti == _opInScene)
+        //if(sceneName=="Tutorial_1" && _opSconfitti == _opInScene)
+        //{
+        //    _cutScene.LaunchCutScene("end");
+        //    return;
+        //}
+        //if (sceneName == "Tutorial_2" && _alberiCurati == _treeInScene)
+        //{
+        //    _cutScene.LaunchCutScene("end");
+        //    return;
+        //}
+
+        if (_opSconfitti == _opInScene)
         {
-            _cutScene.LaunchCutScene("end");
-            return;
+            if (_alberiCurati == _treeInScene)
+            {
+                _cutScene.LaunchCutScene("end");
+                return;
+            }
+            else
+            {
+                if (_treeInScene == 0)
+                {
+                    _cutScene.LaunchCutScene("end");
+                    return;
+                }
+            }
         }
-        if (sceneName == "Tutorial_2" && _alberiCurati == _treeInScene)
+        else if(_opInScene==0)
         {
-            _cutScene.LaunchCutScene("end");
-            return;
+            if (_alberiCurati == _treeInScene)
+            {
+                _cutScene.LaunchCutScene("end");
+                return;
+            }
         }
 
 
@@ -132,31 +157,34 @@ public class GameController : MonoBehaviour
             _musicSheet.SetActive(false);
         }
 
-        
 
-
-
-
-
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
+        //PAN é COLPITA => TOLGO VITE
+        if (_colpita)
         {
-            if (i != 0 && !ChangeColor._safe)
-            {
-                _lives[i - 1].SetActive(false);
-                i--;
-            }
-            else if (i==0) 
-            {
-                Debug.Log("sei morto!");
-                Time.timeScale = 0;
-            }
+            Colpita();
         }
+
+
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //        Debug.Log("colpita"+i);
+    //        if (i != 0 && !ChangeColor._safe)
+    //        {
+    //            Debug.Log("vite rimaste" + i);
+    //            _lives[i - 1].SetActive(false);
+    //            i--;
+    //        }
+    //        else if (i==0) 
+    //        {
+    //            Debug.Log("sei morto!");
+    //            Time.timeScale = 0;
+    //        }
+    //    }
+    //}
 
     public IEnumerator Note()
     {
@@ -201,6 +229,24 @@ public class GameController : MonoBehaviour
         }
         
         
+    }
+
+
+    public void Colpita()
+    {
+
+        if (i != 0)
+        {
+            Debug.Log("vite rimaste" + i);
+            _lives[i - 1].SetActive(false);
+            i--;
+        }
+        else if (i == 0)
+        {
+            Debug.Log("sei morto!");
+            Time.timeScale = 0;
+        }
+        _colpita = false;
     }
 
 

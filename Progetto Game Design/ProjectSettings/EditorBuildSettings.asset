@@ -10,5 +10,11 @@ EditorBuildSettings:
     guid: 27cfd1a27c64cc34b94a978b8881c7aa
   - enabled: 1
     path: Assets/Scenes/Tutorial_2.unity
+    guid: 136e3f72fd092a74dba38a8b062d4ffc
+  - enabled: 1
+    path: Assets/Scenes/Accampamento.unity
     guid: bca5f103256890f4eaf2c4b16e89c7e9
+  - enabled: 1
+    path: Assets/Scenes/BossFinale.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6743336, g: 0.7778377, b: 0.78887755, a: 1}
+  m_IndirectSpecularColor: {r: 0.67578065, g: 0.7788202, b: 0.78926474, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2518,8 +2518,7 @@ MonoBehaviour:
   _cutScene1: {fileID: 363532527}
   _canvas: {fileID: 765742824}
   Tutorial_1: {fileID: 32900000, guid: 548836ea590ab2142b78d5f3b4e70f06, type: 3}
-  Tutorial_2: {fileID: 32900000, guid: cb782e5436bdecc43868d3d685b04115, type: 3}
-  Tutorial_3: {fileID: 0}
+  EndScene: {fileID: 32900000, guid: cb782e5436bdecc43868d3d685b04115, type: 3}
   Lampo: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Terremoto: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Vento: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
@@ -2777,7 +2776,7 @@ PrefabInstance:
     - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
         type: 3}
       propertyPath: _lives
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
         type: 3}
@@ -3913,8 +3912,7 @@ MonoBehaviour:
   _cutScene: {fileID: 923893464}
   _operai:
   - {fileID: 1707205754}
-  _tree:
-  - {fileID: 799287809}
+  _tree: []
   tempoDiGioco: 0
   MascheraAlbero: {fileID: 1234354181}
 --- !u!114 &1669007348
