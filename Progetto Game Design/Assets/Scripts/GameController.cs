@@ -11,12 +11,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _pentagram;
     [SerializeField] private GameObject _musicSheet;
     [SerializeField] private CutScene _cutScene;
-    [SerializeField] private List<GameObject> _operai;
-    [SerializeField] private List<GameObject> _tree;
-    [SerializeField] private int tempoDiGioco=0;
+    //[SerializeField] private List<GameObject> _operai;
+    //[SerializeField] private List<GameObject> _tree;
+    //[SerializeField] private int tempoDiGioco=0;
     [SerializeField] private GameObject MascheraAlbero;
     //[SerializeField] private List<GameObject> _notes;
-
+    [SerializeField] private List<GameObject> _missions;
 
     private int i;
     private int _time=5;
@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour
     private string video;
     private int _opInScene;
     private int _treeInScene;
+
+    private int _currentMission;
 
     public static bool _colpita = false;
 
@@ -39,26 +41,26 @@ public class GameController : MonoBehaviour
 
 
 
-        if (_operai.Count != 0)
-        {
-            _opInScene = _operai.Count;
-            Debug.Log(_opInScene + " operai in scena");
+        //if (_operai.Count != 0)
+        //{
+        //    _opInScene = _operai.Count;
+        //    Debug.Log(_opInScene + " operai in scena");
 
-        }
-        else
-        {
-            Debug.Log("No operai in scena");
-        }
-        if (_tree.Count != 0)
-        {
-            _treeInScene = _tree.Count;
-            Debug.Log(_treeInScene + " alberi in scena");
+        //}
+        //else
+        //{
+        //    Debug.Log("No operai in scena");
+        //}
+        //if (_tree.Count != 0)
+        //{
+        //    _treeInScene = _tree.Count;
+        //    Debug.Log(_treeInScene + " alberi in scena");
 
-        }
-        else
-        {
-            Debug.Log("No alberi in scena");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("No alberi in scena");
+        //}
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
         
@@ -67,12 +69,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        _currentMission = ThirdPersonUnityCharacterController._IDtarget;
         _decreaseLife = false;
         _alberoCurato = false;
 
-        int _opSconfitti = _operai.Count(item => !item.activeSelf);
-        int _alberiCurati = _tree.Count(item => item.gameObject.GetComponent<TreeRise>()._foglieAttive);
+        //int _opSconfitti = _operai.Count(item => !item.activeSelf);
+        //int _alberiCurati = _tree.Count(item => item.gameObject.GetComponent<TreeRise>()._foglieAttive);
+
+        int _missionCompleted = _missions.Count(item => item.GetComponent<MissionID>()._completed);
+        Debug.Log("NUMBER OF MISSIONS = " + _missions.Count + ", MISSION COMPLETED = " + _missionCompleted + ", CURRENT MISSION = "+ _currentMission);
 
         //SE TUTTI GLI OPERAI SONO STATI SCONFITTI O GLI ALBERI CURATI LANCIA LA CUTSCENE FINALE
         //if(sceneName=="Tutorial_1" && _opSconfitti == _opInScene)
@@ -86,29 +91,35 @@ public class GameController : MonoBehaviour
         //    return;
         //}
 
-        if (_opSconfitti == _opInScene)
+        //if (_opSconfitti == _opInScene)
+        //{
+        //    if (_alberiCurati == _treeInScene)
+        //    {
+        //        _cutScene.LaunchCutScene("end");
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        if (_treeInScene == 0)
+        //        {
+        //            _cutScene.LaunchCutScene("end");
+        //            return;
+        //        }
+        //    }
+        //}
+        //else if(_opInScene==0)
+        //{
+        //    if (_alberiCurati == _treeInScene)
+        //    {
+        //        _cutScene.LaunchCutScene("end");
+        //        return;
+        //    }
+        //}
+
+        if (_missions.Count == _missionCompleted)
         {
-            if (_alberiCurati == _treeInScene)
-            {
-                _cutScene.LaunchCutScene("end");
-                return;
-            }
-            else
-            {
-                if (_treeInScene == 0)
-                {
-                    _cutScene.LaunchCutScene("end");
-                    return;
-                }
-            }
-        }
-        else if(_opInScene==0)
-        {
-            if (_alberiCurati == _treeInScene)
-            {
-                _cutScene.LaunchCutScene("end");
-                return;
-            }
+            _cutScene.LaunchCutScene("end");
+            return;
         }
 
 
@@ -125,15 +136,45 @@ public class GameController : MonoBehaviour
         {
             StopCoroutine("Note");
             Time.timeScale = 1;
-            video = KeySequence._mossa;
-            if (_operai.Count != 0)
+            
+            //if (_operai.Count != 0)
+            //{
+            //    _decreaseLife = true;
+            //}
+            //else if(_tree.Count!=0)
+            //{
+            //    Debug.Log("hai curato l'albero!");
+            //    _alberoCurato = true;
+            //}
+            //_pentagram.SetActive(false);
+
+            if (!_missions[_currentMission-1].GetComponent<MissionID>()._operaioSconfitto)
             {
-                _decreaseLife = true;
+                if (KeySequence._mossa == "rise")
+                {
+                    Debug.Log("MOSSA SBAGLIATA!!!");
+                    video = "";
+                }
+                else
+                {
+                    video = KeySequence._mossa;
+                    _decreaseLife = true;
+                }
+                
             }
-            else if(_tree.Count!=0)
+            else if (!_missions[_currentMission - 1].GetComponent<MissionID>()._completed)
             {
-                Debug.Log("hai curato l'albero!");
-                _alberoCurato = true;
+                if (KeySequence._mossa == "rise")
+                {
+                    video = KeySequence._mossa;
+                    _alberoCurato = true;
+                }
+                else
+                {
+                    Debug.Log("MOSSA SBAGLIATA!!!");
+                    video = "";
+                }
+                
             }
             _pentagram.SetActive(false);
         }
@@ -226,6 +267,7 @@ public class GameController : MonoBehaviour
         if (MascheraAlbero.transform.localPosition.y < 25) 
         {
             Time.timeScale = 0;
+            //HAI PERSO!!!
         }
         
         

@@ -21,6 +21,8 @@ public class CutScene : MonoBehaviour
     [SerializeField] private VideoClip Vento;
     [SerializeField] private VideoClip Albero;
 
+    [SerializeField] private string _nextScene;
+
     private VideoPlayer vp;
     private int _lenght,_op;
     private bool _skipFinal = false;
@@ -53,18 +55,19 @@ public class CutScene : MonoBehaviour
             if (_skipFinal)
             {
 
-                if (currentScene.name == "Tutorial_1")
-                {
-                    SceneManager.LoadScene("Tutorial_2");
-                }
-                else if (currentScene.name == "Tutorial_2")
-                {
-                    SceneManager.LoadScene("Accampamento");
-                }
-                else if (currentScene.name == "Accampamento")
-                {
-                    SceneManager.LoadScene("BossFinale");
-                }
+                //if (currentScene.name == "Tutorial_1")
+                //{
+                //    SceneManager.LoadScene("Tutorial_2");
+                //}
+                //else if (currentScene.name == "Tutorial_2")
+                //{
+                //    SceneManager.LoadScene("Accampamento");
+                //}
+                //else if (currentScene.name == "Accampamento")
+                //{
+                //    SceneManager.LoadScene("BossFinale");
+                //}
+                SceneManager.LoadScene(_nextScene);
             }
             else
             {
@@ -137,18 +140,19 @@ public class CutScene : MonoBehaviour
         yield return new WaitForSecondsRealtime(_lenght);
         KeySequence._isCorrect = false;
         Time.timeScale = 1;
-        if (currentScene.name == "Tutorial_1")
-        {
-            SceneManager.LoadScene("Tutorial_2");
-        }
-        else if(currentScene.name == "Tutorial_2")
-        {
-            SceneManager.LoadScene("Accampamento");
-        }
-        else if(currentScene.name == "Accampamento")
-        {
-            SceneManager.LoadScene("BossFinale");
-        }
+        //if (currentScene.name == "Tutorial_1")
+        //{
+        //    SceneManager.LoadScene("Tutorial_2");
+        //}
+        //else if(currentScene.name == "Tutorial_2")
+        //{
+        //    SceneManager.LoadScene("Accampamento");
+        //}
+        //else if(currentScene.name == "Accampamento")
+        //{
+        //    SceneManager.LoadScene("BossFinale");
+        //}
+        SceneManager.LoadScene(_nextScene);
         
         _mainCam.SetActive(true);
         _cutScene1.SetActive(false);

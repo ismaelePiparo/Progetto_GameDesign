@@ -1873,7 +1873,8 @@ MonoBehaviour:
   Lampo: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Terremoto: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Vento: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
-  Albero: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
+  Albero: {fileID: 32900000, guid: b63eb6a48a092fc4eb4c339acb487662, type: 3}
+  _nextScene: Livello_1
 --- !u!4 &874982847
 Transform:
   m_ObjectHideFlags: 0
@@ -2972,6 +2973,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  _completed: 0
+  Tree: {fileID: 497844044}
+  Operaio: {fileID: 126739647}
+  _curaAncheAlbero: 1
+  _operaioSconfitto: 0
 --- !u!135 &1463950096
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3161,11 +3167,9 @@ MonoBehaviour:
   _pentagram: {fileID: 1773743453}
   _musicSheet: {fileID: 43856703}
   _cutScene: {fileID: 874982846}
-  _operai: []
-  _tree:
-  - {fileID: 497844044}
-  tempoDiGioco: 0
   MascheraAlbero: {fileID: 1654474793}
+  _missions:
+  - {fileID: 1463950094}
 --- !u!1 &1527743667
 GameObject:
   m_ObjectHideFlags: 0

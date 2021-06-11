@@ -5317,6 +5317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 3
+  _completed: 0
+  Tree: {fileID: 1252606743}
+  Operaio: {fileID: 1238108819}
+  _curaAncheAlbero: 0
+  _operaioSconfitto: 0
 --- !u!135 &931706979
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6665,6 +6670,7 @@ MonoBehaviour:
   Terremoto: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Vento: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Albero: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
+  _nextScene: BossFinale
 --- !u!4 &1118456010
 Transform:
   m_ObjectHideFlags: 0
@@ -10789,6 +10795,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 2
+  _completed: 0
+  Tree: {fileID: 1750711557}
+  Operaio: {fileID: 264229300}
+  _curaAncheAlbero: 0
+  _operaioSconfitto: 0
 --- !u!135 &1655681366
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12731,6 +12742,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  _completed: 0
+  Tree: {fileID: 1334905605}
+  Operaio: {fileID: 916107677}
+  _curaAncheAlbero: 0
+  _operaioSconfitto: 0
 --- !u!135 &2035964586
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12979,13 +12995,11 @@ MonoBehaviour:
   _pentagram: {fileID: 1680075219}
   _musicSheet: {fileID: 951333109}
   _cutScene: {fileID: 1118456009}
-  _operai:
-  - {fileID: 916107677}
-  - {fileID: 264229300}
-  - {fileID: 1238108819}
-  _tree: []
-  tempoDiGioco: 0
   MascheraAlbero: {fileID: 481283447}
+  _missions:
+  - {fileID: 2035964584}
+  - {fileID: 1655681364}
+  - {fileID: 931706977}
 --- !u!1001 &2085336544
 PrefabInstance:
   m_ObjectHideFlags: 0

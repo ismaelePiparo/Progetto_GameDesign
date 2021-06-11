@@ -59,7 +59,6 @@ public class GuardSimple : MonoBehaviour
         {
             
             _isDied = true;
-            
         }
         if (_isDied)
         {

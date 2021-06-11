@@ -109,8 +109,11 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _velocity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
             }
 
+
+
+
             //FLAUTO
-            if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider)
+            if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider && FluteIcon.color.a==1)
             {
                 //_animator.SetBool("dead", true);
                 _playFlute = true;
@@ -163,16 +166,15 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Mission1"))
-    //    {
-    //        //Debug.Log("sono fuori il collider");
-    //        _IDtarget = 0;
-    //        Debug.Log("ID Target: " + _IDtarget);
-    //        _inCollider = false;
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Mission"))
+        {
+            
+            _IDtarget = 0;
+            _inCollider = false;
+        }
+    }
 
 
     private void UpdateAnimations()

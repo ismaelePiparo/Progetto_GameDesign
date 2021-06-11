@@ -2523,6 +2523,7 @@ MonoBehaviour:
   Terremoto: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Vento: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Albero: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
+  _nextScene: Tutorial_2
 --- !u!4 &923893465
 Transform:
   m_ObjectHideFlags: 0
@@ -3871,6 +3872,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  _completed: 0
+  Tree: {fileID: 799287809}
+  Operaio: {fileID: 1707205754}
+  _curaAncheAlbero: 0
+  _operaioSconfitto: 0
 --- !u!4 &1617371754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4882698f19d48dd42af12117cea6f02b,
@@ -3910,11 +3916,9 @@ MonoBehaviour:
   _pentagram: {fileID: 1282329767}
   _musicSheet: {fileID: 822287455}
   _cutScene: {fileID: 923893464}
-  _operai:
-  - {fileID: 1707205754}
-  _tree: []
-  tempoDiGioco: 0
   MascheraAlbero: {fileID: 1234354181}
+  _missions:
+  - {fileID: 1469321943}
 --- !u!114 &1669007348
 MonoBehaviour:
   m_ObjectHideFlags: 0
