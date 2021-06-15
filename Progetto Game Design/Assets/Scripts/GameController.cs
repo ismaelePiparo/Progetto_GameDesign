@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour
         //    }
         //}
 
-        if (_missions.Count == _missionCompleted)
+        if (_missions.Count == _missionCompleted && _missions.Count!=0)
         {
             _cutScene.LaunchCutScene("end");
             return;

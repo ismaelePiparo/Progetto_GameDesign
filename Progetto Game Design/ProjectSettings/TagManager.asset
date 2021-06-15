@@ -8,6 +8,7 @@ TagManager:
   - Mission
   - Mission1
   - MusicPlayer
+  - Lama
   layers:
   - Default
   - TransparentFX

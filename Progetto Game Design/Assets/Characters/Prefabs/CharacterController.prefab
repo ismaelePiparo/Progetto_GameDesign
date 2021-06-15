@@ -69,13 +69,13 @@ MonoBehaviour:
   _speed: 5
   _runSpeed: 10
   _rotationSpeed: 3
-  _gravity: -9.81
+  _gravity: -19.62
   _groundCheck: {fileID: 6600925156519830811}
   _groundDistance: 0.4
   _groundMask:
     serializedVersion: 2
     m_Bits: 8
-  _jumpHeight: 3
+  _jumpHeight: 0.5
   _animator: {fileID: 215845157134427287}
   FluteIcon: {fileID: 0}
   _timeFlute: 5
@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.6603774, g: 0.38937345, b: 0.38937345, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.95094585, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
