@@ -23,6 +23,7 @@ public class MissionID : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(!Operaio.activeSelf)
         {
             _operaioSconfitto = true;

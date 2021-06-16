@@ -16,10 +16,10 @@ public class CutScene : MonoBehaviour
     [SerializeField] private VideoClip Tutorial_1;
     //[SerializeField] private VideoClip Tutorial_2;
     [SerializeField] private VideoClip EndScene;
-    [SerializeField] private GameObject Lampo;
-    [SerializeField] private VideoClip Terremoto;
+    [SerializeField] private VideoPlayer Lampo;
+    [SerializeField] private VideoPlayer Terremoto;
     [SerializeField] private VideoPlayer Vento;
-    [SerializeField] private GameObject Albero;
+   
     [SerializeField] private VideoPlayer MagicTree;
 
 
@@ -92,7 +92,8 @@ public class CutScene : MonoBehaviour
             KeySequence._isCorrect = false;
             // StartCoroutine("StartCutScene", Lampo);
             // Lampo.SetActive(true);
-            Lampo.GetComponent<VideoPlayer>().Play();
+            //Lampo.GetComponent<VideoPlayer>().Play();
+            Lampo.Play();
 
 
         }
@@ -104,12 +105,12 @@ public class CutScene : MonoBehaviour
         }
         if (string.Equals(i, "quake"))
         {
-            StartCoroutine("StartCutScene", Terremoto);
+            KeySequence._isCorrect = false;
+            Terremoto.Play();
         }
         if (string.Equals(i, "rise"))
         {
             KeySequence._isCorrect = false;
-            Albero.SetActive(true);
             MagicTree.Play();
         }
         if (string.Equals(i, "end"))

@@ -123,6 +123,7 @@ public class GameController : MonoBehaviour
         }
 
 
+
         //SE PAN SUONA IL FLAUTO LANCIA LA CORUTINE DEL PENTAGRAMMA
         if (ThirdPersonUnityCharacterController._playFlute)
         {
