@@ -16,10 +16,13 @@ public class CutScene : MonoBehaviour
     [SerializeField] private VideoClip Tutorial_1;
     //[SerializeField] private VideoClip Tutorial_2;
     [SerializeField] private VideoClip EndScene;
-    [SerializeField] private VideoClip Lampo;
+    [SerializeField] private GameObject Lampo;
     [SerializeField] private VideoClip Terremoto;
-    [SerializeField] private VideoClip Vento;
-    [SerializeField] private VideoClip Albero;
+    [SerializeField] private VideoPlayer Vento;
+    [SerializeField] private GameObject Albero;
+    [SerializeField] private VideoPlayer MagicTree;
+
+
 
     [SerializeField] private string _nextScene;
 
@@ -86,27 +89,31 @@ public class CutScene : MonoBehaviour
         
         if (string.Equals(i, "flash"))
         {
-            Time.timeScale = 0;
-            StartCoroutine("StartCutScene", Lampo);
+            KeySequence._isCorrect = false;
+            // StartCoroutine("StartCutScene", Lampo);
+            // Lampo.SetActive(true);
+            Lampo.GetComponent<VideoPlayer>().Play();
+
+
         }
         if (string.Equals(i, "wind"))
         {
-            Time.timeScale = 0;
-            StartCoroutine("StartCutScene", Vento);
+            KeySequence._isCorrect = false;
+            Vento.Play();
+
         }
         if (string.Equals(i, "quake"))
         {
-            Time.timeScale = 0;
             StartCoroutine("StartCutScene", Terremoto);
         }
         if (string.Equals(i, "rise"))
         {
-            Time.timeScale = 0;
-            StartCoroutine("StartCutScene", Albero);
+            KeySequence._isCorrect = false;
+            Albero.SetActive(true);
+            MagicTree.Play();
         }
         if (string.Equals(i, "end"))
         {
-            Time.timeScale = 0;
             _skipFinal = true;
             StartCoroutine("StartEndScene", EndScene);
         }
@@ -127,6 +134,13 @@ public class CutScene : MonoBehaviour
         _mainCam.SetActive(true);
         _cutScene1.SetActive(false);
         _canvas.SetActive(true);
+    }
+
+
+    IEnumerator Reset(GameObject a)
+    {
+        yield return new WaitForSecondsRealtime(5f);
+        a.SetActive(false);
     }
 
     IEnumerator StartEndScene(VideoClip a)
