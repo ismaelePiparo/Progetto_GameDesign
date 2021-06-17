@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 5317057a59cc82a4fa2ea64e70e2362c,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1371,6 +1372,7 @@ MonoBehaviour:
   _canvas: {fileID: 1843469580}
   Tutorial_1: {fileID: 0}
   EndScene: {fileID: 32900000, guid: afa77913dceadd14f88b8e39f50bb033, type: 3}
+  EndScene2: {fileID: 32900000, guid: 810527914d99e1749b2cb7c2115d6ff2, type: 3}
   Lampo: {fileID: 21224226}
   Terremoto: {fileID: 32900000, guid: ec227cfea26cf354c9e7488b136db7bb, type: 3}
   Vento: {fileID: 1002934132}
@@ -2216,7 +2218,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 39.366898
+  m_Radius: 13.5
   m_Center: {x: 0.10871887, y: 0, z: 0.9241028}
 --- !u!4 &726488136
 Transform:
@@ -3505,7 +3507,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 39.366898
+  m_Radius: 13.3
   m_Center: {x: 0.10871887, y: 0, z: 0.9241028}
 --- !u!4 &1053120967
 Transform:

@@ -40,7 +40,5 @@ public class StartMission: MonoBehaviour
 
         _starMission = false;
        
-
-
     }
 }

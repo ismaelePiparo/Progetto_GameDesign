@@ -268,10 +268,27 @@ public class GameController : MonoBehaviour
         if (MascheraAlbero.transform.localPosition.y < 25) 
         {
             Time.timeScale = 0;
+
+            if (SceneManager.GetActiveScene().name == "Tutorial_1")
+            {
+                SceneManager.LoadScene("Tutorial_1");
+                Time.timeScale = 0;
+            }
+            else if (SceneManager.GetActiveScene().name == "Tutorial_2")
+            {
+                SceneManager.LoadScene("Tutorial_2");
+                Time.timeScale = 0;
+            }
+            else 
+            {
+                _cutScene.LaunchCutScene("failed");
+                //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
+            }
+
             //HAI PERSO!!!
         }
-        
-        
+
+
     }
 
 
@@ -286,8 +303,16 @@ public class GameController : MonoBehaviour
         }
         else if (i == 0)
         {
-            Debug.Log("sei morto!");
-            Time.timeScale = 0;
+            if (SceneManager.GetActiveScene().name == "Tutorial_1")
+            {
+                SceneManager.LoadScene("Tutorial_1");
+                Time.timeScale = 0;
+            }
+            else {
+                _cutScene.LaunchCutScene("failed");
+                //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
+            }
+
         }
         _colpita = false;
     }

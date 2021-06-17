@@ -16,6 +16,7 @@ public class CutScene : MonoBehaviour
     [SerializeField] private VideoClip Tutorial_1;
     //[SerializeField] private VideoClip Tutorial_2;
     [SerializeField] private VideoClip EndScene;
+    [SerializeField] private VideoClip EndScene2;
     [SerializeField] private VideoPlayer Lampo;
     [SerializeField] private VideoPlayer Terremoto;
     [SerializeField] private VideoPlayer Vento;
@@ -117,6 +118,11 @@ public class CutScene : MonoBehaviour
         {
             _skipFinal = true;
             StartCoroutine("StartEndScene", EndScene);
+        }
+        if (string.Equals(i, "failed"))
+        {
+            _skipFinal = true;
+            StartCoroutine("StartEndScene", EndScene2);
         }
     }
 
