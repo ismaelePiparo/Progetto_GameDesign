@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScenaEsplorazioneBosco_Animale.unity
     guid: 9afdb41f35a1e7f46ab3b8ac8b402feb
+  - enabled: 1
+    path: Assets/Scenes/TitoliDiCoda.unity
+    guid: 4754bdbc1e8e308418e2399ee3e960e1
   m_configObjects: {}
