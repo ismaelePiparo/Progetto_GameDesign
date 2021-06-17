@@ -25,7 +25,7 @@ public class CutScene : MonoBehaviour
 
 
 
-    [SerializeField] private string _nextScene;
+    [SerializeField] public string _nextScene;
 
     private VideoPlayer vp;
     private int _lenght,_op;

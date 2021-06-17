@@ -10,6 +10,10 @@ public class Ruspa : MonoBehaviour
 
     [SerializeField] private GameObject _target;
     [SerializeField] private int _lives = 3;
+    [SerializeField] private CutScene _cutScene;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject _capo;
+        
 
 
     private NavMeshAgent _navMeshAgent;
@@ -19,7 +23,7 @@ public class Ruspa : MonoBehaviour
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        
+        _animator.enabled = false;
     }
 
     void Update()
@@ -31,19 +35,30 @@ public class Ruspa : MonoBehaviour
         if (_lives == 0)
         {
             _isDied = true;
-        }
-        
+            _animator.enabled = false;
+            _capo.GetComponent<Animator>().enabled = false;
+            _navMeshAgent.enabled = true;
+            StartCoroutine("Deactivate");
 
-        if (ThirdPersonUnityCharacterController._playingFlute || ThirdPersonUnityCharacterController._playFlute)
-        {
-            _navMeshAgent.enabled = false;
         }
         else
         {
+            if (ThirdPersonUnityCharacterController._playingFlute || ThirdPersonUnityCharacterController._playFlute)
+            {
+                _navMeshAgent.enabled = false;
+                _animator.enabled = false;
+                _capo.GetComponent<Animator>().enabled = false;
+            }
+            else
+            {
 
-            FollowTarget();
+                StartCoroutine("Wait");
 
+            }
         }
+        
+
+        
     }
 
     
@@ -54,21 +69,29 @@ public class Ruspa : MonoBehaviour
     {
 
         _navMeshAgent.enabled = true;
+        _capo.GetComponent<Animator>().enabled = true;
+        _animator.enabled = true;
         _navMeshAgent.SetDestination(_target.transform.position);
     }
 
-    private bool IsTargetWithinDistance(float distance)
-    {
-        return (_target.transform.position - transform.position).sqrMagnitude <= distance * distance;
-    }
 
+    public IEnumerator Wait()
+    {
+
+        yield return new WaitForSecondsRealtime(2);
+        FollowTarget();
+    }
 
 
     public IEnumerator Deactivate()
     {
 
-        yield return new WaitForSecondsRealtime(5);
-        this.gameObject.SetActive(false);
+        _cutScene._nextScene = "TitoliDiCoda";
+        yield return new WaitForSecondsRealtime(12);
+        
+        _cutScene.LaunchCutScene("end");
 
     }
+
+    
 }
