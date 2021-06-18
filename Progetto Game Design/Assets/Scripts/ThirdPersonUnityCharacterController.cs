@@ -112,7 +112,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
 
             //FLAUTO
-            if (Input.GetKeyDown(KeyCode.Mouse0) && _isGrounded && FluteIcon.color.a==1)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && _isGrounded && FluteIcon.color.a==1)
             {
                 _animator.SetBool("dead", true);
                 _playFlute = true;

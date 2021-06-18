@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 
 public class Play_Button_Script : MonoBehaviour
 {
 
-    [SerializeField] GameObject VideoPlayer;
+    [SerializeField] GameObject vp;
     [SerializeField] GameObject VideoRawImage;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        VideoPlayer.SetActive(false);
+        vp.SetActive(false);
         VideoRawImage.SetActive(false);
 
     }
@@ -22,12 +23,14 @@ public class Play_Button_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (vp.activeSelf && vp.GetComponent<VideoPlayer>().isPaused) {
+            SceneManager.LoadScene("Tutorial_1");
+        }
     }
 
     public void PlayButton()
     {
-        VideoPlayer.SetActive(true);
+        vp.SetActive(true);
         VideoRawImage.SetActive(true);
 
     }
