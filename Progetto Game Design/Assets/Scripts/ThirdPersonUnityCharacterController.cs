@@ -62,6 +62,8 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
          
             _playingFlute = true;
 
+            _animator.SetBool("dead", false);
+
 
 
         }
@@ -112,9 +114,9 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             //FLAUTO
             if (Input.GetKeyDown(KeyCode.Mouse0) && _isGrounded && FluteIcon.color.a==1)
             {
-                //_animator.SetBool("dead", true);
+                _animator.SetBool("dead", true);
                 _playFlute = true;
-                UpdateAnimations();
+                //UpdateAnimations();
             }
             else if(Input.GetKeyDown(KeyCode.LeftControl) && _isGrounded && FluteIcon.color.a != 1)
             {
@@ -200,7 +202,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
                 _animator.SetFloat("speed", _inputSpeed);
             }          
         }
-        _animator.SetBool("dead", _playFlute);
+        //_animator.SetBool("dead", _playFlute);
         
         
     }
