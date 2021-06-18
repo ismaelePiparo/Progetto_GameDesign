@@ -45,6 +45,7 @@ public class CutScene : MonoBehaviour
         Time.timeScale = 1;
         if (sceneName == "Tutorial_1")
         {
+            Time.timeScale = 0;
             StartCoroutine("StartCutScene", Tutorial_1);
         }
         

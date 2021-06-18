@@ -21,7 +21,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     [SerializeField] private Image FluteIcon;
     [SerializeField] private int _timeFlute=5;
-
+    [SerializeField] private GameObject _NoFlute;
 
     private CharacterController _characterController;
     private Vector3 _inputVector;
@@ -34,7 +34,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     private bool _isRun = false;
     private float _defaultSpeed;
     public static bool _playFlute=false;
-    private bool _inCollider = false;
+    public static bool _inCollider = false;
     public static bool _playingFlute = false;
 
     public static int _IDtarget = 0;
@@ -56,16 +56,13 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Play_Flute"))
         {
-            //Debug.Log("Sto suonado");
-            //float color=FluteIcon.color.a;
-            //Debug.Log("color.a " + color);
-            //color = 0;
+          
 
             SetOpacity(0);
          
             _playingFlute = true;
 
-            ;
+
 
         }
         else
@@ -113,10 +110,16 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
 
             //FLAUTO
-            if (Input.GetKeyDown(KeyCode.Z) && _isGrounded && _inCollider && FluteIcon.color.a==1)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && _isGrounded && FluteIcon.color.a==1)
             {
                 //_animator.SetBool("dead", true);
                 _playFlute = true;
+                UpdateAnimations();
+            }
+            else if(Input.GetKeyDown(KeyCode.LeftControl) && _isGrounded && FluteIcon.color.a != 1)
+            {
+                _playFlute = false;
+                StartCoroutine("NoFlute");
             }
             else 
             {
@@ -130,7 +133,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             _characterController.Move(_velocity * Time.deltaTime);
 
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && _inputSpeed!=0)
             {
                 
                 _isRun = true;
@@ -221,5 +224,13 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
         }
         yield break;
         
+    }
+
+    public IEnumerator NoFlute()
+    {
+        _NoFlute.SetActive(true);
+        yield return new WaitForSecondsRealtime(2f);
+        _NoFlute.SetActive(false);
+        yield break;
     }
 }

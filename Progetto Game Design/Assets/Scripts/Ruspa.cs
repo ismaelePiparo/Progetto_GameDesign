@@ -78,7 +78,7 @@ public class Ruspa : MonoBehaviour
     public IEnumerator Wait()
     {
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(1);
         FollowTarget();
     }
 

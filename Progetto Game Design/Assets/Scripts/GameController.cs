@@ -11,20 +11,19 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _pentagram;
     [SerializeField] private GameObject _musicSheet;
     [SerializeField] private CutScene _cutScene;
-    //[SerializeField] private List<GameObject> _operai;
-    //[SerializeField] private List<GameObject> _tree;
-    //[SerializeField] private int tempoDiGioco=0;
     [SerializeField] private GameObject MascheraAlbero;
-    //[SerializeField] private List<GameObject> _notes;
     [SerializeField] private List<GameObject> _missions;
 
+    [SerializeField] private GameObject _inutileSuonare;
+    [SerializeField] private GameObject _troppoDistante;
+    [SerializeField] private GameObject _melodiaSbagliata;
+
     private int i;
-    private int _time=5;
+    private int _time=2;
     public static bool _decreaseLife = false;
     public static bool _alberoCurato = false;
     private string video;
-    private int _opInScene;
-    private int _treeInScene;
+   
 
     private int _currentMission;
 
@@ -32,38 +31,25 @@ public class GameController : MonoBehaviour
 
     private string sceneName;
 
+
+    public static bool _attivoPentagramma = true;
+
     // Start is called before the first frame update
     void Start()
     {
         i = _lives.Count;
 
-        InvokeRepeating("ChangePosition", 0,2);
-
-
-
-        //if (_operai.Count != 0)
-        //{
-        //    _opInScene = _operai.Count;
-        //    Debug.Log(_opInScene + " operai in scena");
-
-        //}
-        //else
-        //{
-        //    Debug.Log("No operai in scena");
-        //}
-        //if (_tree.Count != 0)
-        //{
-        //    _treeInScene = _tree.Count;
-        //    Debug.Log(_treeInScene + " alberi in scena");
-
-        //}
-        //else
-        //{
-        //    Debug.Log("No alberi in scena");
-        //}
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
-        
+
+        if (sceneName!= "ScenaEsplorazioneBosco_Animale") {
+            InvokeRepeating("ChangePosition", 0, 2);
+        }
+
+        _inutileSuonare.SetActive(false);
+        _troppoDistante.SetActive(false);
+        _melodiaSbagliata.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -73,48 +59,9 @@ public class GameController : MonoBehaviour
         _decreaseLife = false;
         _alberoCurato = false;
 
-        //int _opSconfitti = _operai.Count(item => !item.activeSelf);
-        //int _alberiCurati = _tree.Count(item => item.gameObject.GetComponent<TreeRise>()._foglieAttive);
-
         int _missionCompleted = _missions.Count(item => item.GetComponent<MissionID>()._completed);
         Debug.Log("NUMBER OF MISSIONS = " + _missions.Count + ", MISSION COMPLETED = " + _missionCompleted + ", CURRENT MISSION = "+ _currentMission);
 
-        //SE TUTTI GLI OPERAI SONO STATI SCONFITTI O GLI ALBERI CURATI LANCIA LA CUTSCENE FINALE
-        //if(sceneName=="Tutorial_1" && _opSconfitti == _opInScene)
-        //{
-        //    _cutScene.LaunchCutScene("end");
-        //    return;
-        //}
-        //if (sceneName == "Tutorial_2" && _alberiCurati == _treeInScene)
-        //{
-        //    _cutScene.LaunchCutScene("end");
-        //    return;
-        //}
-
-        //if (_opSconfitti == _opInScene)
-        //{
-        //    if (_alberiCurati == _treeInScene)
-        //    {
-        //        _cutScene.LaunchCutScene("end");
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        if (_treeInScene == 0)
-        //        {
-        //            _cutScene.LaunchCutScene("end");
-        //            return;
-        //        }
-        //    }
-        //}
-        //else if(_opInScene==0)
-        //{
-        //    if (_alberiCurati == _treeInScene)
-        //    {
-        //        _cutScene.LaunchCutScene("end");
-        //        return;
-        //    }
-        //}
 
         if (_missions.Count == _missionCompleted && _missions.Count!=0)
         {
@@ -127,33 +74,41 @@ public class GameController : MonoBehaviour
         //SE PAN SUONA IL FLAUTO LANCIA LA CORUTINE DEL PENTAGRAMMA
         if (ThirdPersonUnityCharacterController._playFlute)
         {
-            _time = 5;
-            Time.timeScale = 0.5f;
-            StartCoroutine("Note");
+            if (_missions.Count == 0)
+            {
+                //Debug.Log("Non succede niente");
+                StartCoroutine("InutileSuonare");
+                video = "";
+            }
+            else if (!ThirdPersonUnityCharacterController._inCollider)
+            {
+                //Debug.Log("Troppo lontana");
+                StartCoroutine("TroppoLontana");
+                video = "";
+            }
+            else
+            {
+                _time = 5;
+                Time.timeScale = 0.5f;
+                StartCoroutine("Note");
+            }
         }
+
+
 
         //SE LA SEQUENZA é CORRETTA SPEGNE IL PENTAGRAMMA DECREMENTA LA VITA/CURA L'ALBERO E IMPOSTA LA CUTSCENE DA LANCIARE
         if (KeySequence._isCorrect && _pentagram.activeSelf)
         {
             StopCoroutine("Note");
             Time.timeScale = 1;
-            
-            //if (_operai.Count != 0)
-            //{
-            //    _decreaseLife = true;
-            //}
-            //else if(_tree.Count!=0)
-            //{
-            //    Debug.Log("hai curato l'albero!");
-            //    _alberoCurato = true;
-            //}
-            //_pentagram.SetActive(false);
 
-            if (!_missions[_currentMission-1].GetComponent<MissionID>()._operaioSconfitto)
+          
+            if (!_missions[_currentMission - 1].GetComponent<MissionID>()._operaioSconfitto)
             {
                 if (KeySequence._mossa == "rise")
                 {
-                    Debug.Log("MOSSA SBAGLIATA!!!");
+                    //Debug.Log("MOSSA SBAGLIATA!!!");
+                    StartCoroutine("MossaSbagliata");
                     video = "";
                 }
                 else
@@ -161,7 +116,7 @@ public class GameController : MonoBehaviour
                     video = KeySequence._mossa;
                     _decreaseLife = true;
                 }
-                
+
             }
             else if (!_missions[_currentMission - 1].GetComponent<MissionID>()._completed)
             {
@@ -172,14 +127,16 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("MOSSA SBAGLIATA!!!");
+                    //Debug.Log("MOSSA SBAGLIATA!!!");
+                    StartCoroutine("MossaSbagliata");
                     video = "";
                 }
-                
+
             }
             _pentagram.SetActive(false);
         }
 
+       
         //SE LA SEQUENZA é CORRETT E PAN HA FINITO DI SUONARE LANCIA LA CUTSCENE
         if (KeySequence._isCorrect && !ThirdPersonUnityCharacterController._playingFlute)
         {
@@ -209,24 +166,6 @@ public class GameController : MonoBehaviour
 
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Enemy"))
-    //    {
-    //        Debug.Log("colpita"+i);
-    //        if (i != 0 && !ChangeColor._safe)
-    //        {
-    //            Debug.Log("vite rimaste" + i);
-    //            _lives[i - 1].SetActive(false);
-    //            i--;
-    //        }
-    //        else if (i==0) 
-    //        {
-    //            Debug.Log("sei morto!");
-    //            Time.timeScale = 0;
-    //        }
-    //    }
-    //}
 
     public IEnumerator Note()
     {
@@ -240,14 +179,13 @@ public class GameController : MonoBehaviour
 
         while (_time >= 0)
         {
-            
             _time--;//Total time in seconds, countdown
             _pentagram.SetActive(true);
             if (_time == 0)
             {
                 _pentagram.SetActive(false);
                 Time.timeScale = 1;
-                
+
                 yield break;//Stop coroutine
             }
             else if (_time > 0)
@@ -257,6 +195,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
 
 
     void ChangePosition()
@@ -316,6 +255,34 @@ public class GameController : MonoBehaviour
         }
         _colpita = false;
     }
+
+    public IEnumerator InutileSuonare()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        _inutileSuonare.SetActive(true);
+        yield return new WaitForSecondsRealtime(5f);
+        _inutileSuonare.SetActive(false);
+        yield break;
+    }
+
+    public IEnumerator MossaSbagliata()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        _melodiaSbagliata.SetActive(true);
+        yield return new WaitForSecondsRealtime(5f);
+        _melodiaSbagliata.SetActive(false);
+        yield break;
+    }
+
+    public IEnumerator TroppoLontana()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        _troppoDistante.SetActive(true);
+        yield return new WaitForSecondsRealtime(5f);
+        _troppoDistante.SetActive(false);
+        yield break;
+    }
+
 
 
 }

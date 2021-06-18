@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MissionID : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class MissionID : MonoBehaviour
     [SerializeField] public int ID = 1;
     [SerializeField] public bool _completed = false;
     [SerializeField] public GameObject Tree;
-    [SerializeField] public GameObject Operaio;
+    [SerializeField] public List<GameObject> Operai;
 
     [SerializeField] public bool _curaAncheAlbero = true;
 
@@ -23,13 +24,13 @@ public class MissionID : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(!Operaio.activeSelf)
+        int _operaiSconfitti = Operai.Count(item=>!item.activeSelf);
+        if (_operaiSconfitti==Operai.Count)
         {
             _operaioSconfitto = true;
         }
 
-        if (!Operaio.activeSelf && (Tree.GetComponent<TreeRise>()._foglieAttive || !_curaAncheAlbero))
+        if (_operaiSconfitti == Operai.Count && (Tree.GetComponent<TreeRise>()._foglieAttive || !_curaAncheAlbero))
         {
             _completed = true;
         }

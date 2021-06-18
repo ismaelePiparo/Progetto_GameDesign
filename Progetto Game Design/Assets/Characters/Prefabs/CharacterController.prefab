@@ -68,7 +68,7 @@ MonoBehaviour:
   _cameraT: {fileID: 0}
   _speed: 5
   _runSpeed: 10
-  _rotationSpeed: 3
+  _rotationSpeed: 12
   _gravity: -19.62
   _groundCheck: {fileID: 6600925156519830811}
   _groundDistance: 0.4

@@ -106,10 +106,19 @@ public class GuardSimple : MonoBehaviour
         switch (_currentGuardState)
         {
             case GuardState.Patrol:
+                //if (IsTargetWithinDistance(_minChaseDistance) && _inCollider)
+                //{
+                //    newGuardState = GuardState.Chase;
+                //    break;
+                //}
                 if (IsTargetWithinDistance(_minChaseDistance) && _inCollider)
                 {
-                    newGuardState = GuardState.Chase;
-                    break;
+                    if (ThirdPersonUnityCharacterController._inCollider)
+                    {
+                        newGuardState = GuardState.Chase;
+                        break;
+                    }
+                    
                 }
 
                 if (ThirdPersonUnityCharacterController._playingFlute)
