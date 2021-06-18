@@ -54,12 +54,16 @@ public class KeySequence : MonoBehaviour
     [SerializeField] private GameObject Quake;
     [SerializeField] private GameObject Rise;
 
+    [SerializeField] private List<AudioClip> _suoni;
+    [SerializeField] private List<AudioClip> _suoniBrutti;
+    [SerializeField] private AudioSource _audioSource;
 
 
-    private int i,c = 0;
+
+    private int i,c,s,sb, rnd = 0;
     public static string  _mossa = "";
-    
 
+    
     private void Start()
     {
         i = _notes.Count;
@@ -68,16 +72,24 @@ public class KeySequence : MonoBehaviour
         Wind.SetActive(wind);
         Quake.SetActive(quake);
         Rise.SetActive(rise);
+        s = _suoni.Count;
+        sb= _suoniBrutti.Count;
+        //_audioSource.clip = _suoni[0];
+        //_audioSource.Play();
+
     }
 
     private void Update()
     {
-        
-        
+        //rnd = Random.Range(0,s);
+        //Debug.Log(rnd);
 
         if (Input.GetKeyDown(_flash[sequenceIndex]) && _pentagram.activeSelf && flash)
         {
+            rnd = Random.Range(0,s);
             _notes[i - c].SetActive(true);
+            _audioSource.clip = _suoni[rnd];
+            _audioSource.Play();
             if (++sequenceIndex == _flash.Length)
             {
                 _isCorrect = true;
@@ -90,7 +102,11 @@ public class KeySequence : MonoBehaviour
         }
         else if (Input.GetKeyDown(_wind[sequenceIndex]) && _pentagram.activeSelf && wind)
         {
+            
+            rnd = Random.Range(0, s);
             _notes[i - c].SetActive(true);
+            _audioSource.clip = _suoni[rnd];
+            _audioSource.Play();
             if (++sequenceIndex == _wind.Length-1)
             {
                 _isCorrect = true;
@@ -103,7 +119,11 @@ public class KeySequence : MonoBehaviour
         }
         else if (Input.GetKeyDown(_quake[sequenceIndex]) && _pentagram.activeSelf && quake)
         {
+            
+            rnd = Random.Range(0, s);
             _notes[i - c].SetActive(true);
+            _audioSource.clip = _suoni[rnd];
+            _audioSource.Play();
             if (++sequenceIndex == _quake.Length)
             {
                 _isCorrect = true;
@@ -116,7 +136,11 @@ public class KeySequence : MonoBehaviour
         }
         else if (Input.GetKeyDown(_rise[sequenceIndex]) && _pentagram.activeSelf && rise)
         {
+            
+            rnd = Random.Range(0, s);
             _notes[i - c].SetActive(true);
+            _audioSource.clip = _suoni[rnd];
+            _audioSource.Play();
             if (++sequenceIndex == _rise.Length - 1)
             {
                 _isCorrect = true;
@@ -129,6 +153,12 @@ public class KeySequence : MonoBehaviour
         }
         else if (Input.anyKeyDown || !_pentagram.activeSelf)
         {
+           if( _pentagram.activeSelf)
+           {
+                rnd = Random.Range(0, sb);
+                _audioSource.clip = _suoniBrutti[rnd];
+                _audioSource.Play();
+           }
             for (int j = 0; j < i; j++)
             {
                 _notes[j].SetActive(false);
@@ -137,6 +167,8 @@ public class KeySequence : MonoBehaviour
             c = i;
             sequenceIndex = 0;
         }
+
+       
 
 
 

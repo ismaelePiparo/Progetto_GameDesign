@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         _alberoCurato = false;
 
         int _missionCompleted = _missions.Count(item => item.GetComponent<MissionID>()._completed);
-        Debug.Log("NUMBER OF MISSIONS = " + _missions.Count + ", MISSION COMPLETED = " + _missionCompleted + ", CURRENT MISSION = "+ _currentMission);
+        //Debug.Log("NUMBER OF MISSIONS = " + _missions.Count + ", MISSION COMPLETED = " + _missionCompleted + ", CURRENT MISSION = "+ _currentMission);
 
 
         if (_missions.Count == _missionCompleted && _missions.Count!=0)
@@ -170,12 +170,12 @@ public class GameController : MonoBehaviour
     public IEnumerator Note()
     {
 
-        yield return new WaitForSecondsRealtime(1);
-        if (!ThirdPersonUnityCharacterController._playingFlute)
-        {
-            Time.timeScale = 1;
-            yield break;//Stop coroutine
-        }
+        //yield return new WaitForSecondsRealtime(1);
+        //if (!ThirdPersonUnityCharacterController._playingFlute)
+        //{
+        //    Time.timeScale = 1;
+        //    yield break;//Stop coroutine
+        //}
 
         while (_time >= 0)
         {

@@ -96,6 +96,7 @@ public class CutScene : MonoBehaviour
             // Lampo.SetActive(true);
             //Lampo.GetComponent<VideoPlayer>().Play();
             Lampo.Play();
+            Lampo.GetComponent<AudioSource>().Play();
 
 
         }
@@ -103,17 +104,20 @@ public class CutScene : MonoBehaviour
         {
             KeySequence._isCorrect = false;
             Vento.Play();
+            Vento.GetComponent<AudioSource>().Play();
 
         }
         if (string.Equals(i, "quake"))
         {
             KeySequence._isCorrect = false;
             Terremoto.Play();
+            Terremoto.GetComponent<AudioSource>().Play();
         }
         if (string.Equals(i, "rise"))
         {
             KeySequence._isCorrect = false;
             MagicTree.Play();
+            MagicTree.GetComponent<AudioSource>().Play();
         }
         if (string.Equals(i, "end"))
         {
