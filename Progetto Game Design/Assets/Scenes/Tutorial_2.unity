@@ -698,6 +698,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
         type: 3}
+      propertyPath: _Video
+      value: 
+      objectReference: {fileID: 126739647}
+    - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
+        type: 3}
       propertyPath: _lives
       value: 1
       objectReference: {fileID: 0}
@@ -821,6 +826,12 @@ PrefabInstance:
 --- !u!4 &126739646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5262399633208612453, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 126739645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &126739647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1533036765, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
     type: 3}
   m_PrefabInstance: {fileID: 126739645}
   m_PrefabAsset: {fileID: 0}
@@ -2130,6 +2141,7 @@ MonoBehaviour:
   _curato: 0
   _foglieAttive: 0
   foglie: {fileID: 447294818}
+  _Video: {fileID: 1055346286}
 --- !u!1 &540445840
 GameObject:
   m_ObjectHideFlags: 0

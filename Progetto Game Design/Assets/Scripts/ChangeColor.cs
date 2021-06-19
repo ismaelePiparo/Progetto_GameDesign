@@ -34,6 +34,12 @@ public class ChangeColor : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(_safe);
+    }
+
+    void Awake()
+    {
+        _safe = false;
     }
 
     public IEnumerator HitFlash()
@@ -102,6 +108,7 @@ public class ChangeColor : MonoBehaviour
         if (other.CompareTag("Enemy") && !_safe)
         {
             _count = 10;
+            Debug.Log("Colpita");
             GameController._colpita=true;
             StartCoroutine("Timer");
         }

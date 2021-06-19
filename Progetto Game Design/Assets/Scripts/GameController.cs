@@ -46,10 +46,15 @@ public class GameController : MonoBehaviour
             InvokeRepeating("ChangePosition", 0, 2);
         }
 
+       
+
+    }
+
+    private void Awake()
+    {
         _inutileSuonare.SetActive(false);
         _troppoDistante.SetActive(false);
         _melodiaSbagliata.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -84,6 +89,11 @@ public class GameController : MonoBehaviour
             {
                 //Debug.Log("Troppo lontana");
                 StartCoroutine("TroppoLontana");
+                video = "";
+            }
+            else if (_missions[_currentMission - 1].GetComponent<MissionID>()._completed)
+            {
+                StartCoroutine("InutileSuonare");
                 video = "";
             }
             else
@@ -242,6 +252,7 @@ public class GameController : MonoBehaviour
         }
         else if (i == 0)
         {
+            //ChangeColor._safe = false;
             if (SceneManager.GetActiveScene().name == "Tutorial_1")
             {
                 SceneManager.LoadScene("Tutorial_1");

@@ -11,17 +11,27 @@ public class TreeRise : MonoBehaviour
     public bool _foglieAttive = false;
 
     [SerializeField] private GameObject foglie;
+    [SerializeField] private GameObject _Video;
 
     // Start is called before the first frame update
     void Start()
     {
         _id = GetComponentInParent<MissionID>().ID;
-
+        _Video.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (ThirdPersonUnityCharacterController._IDtarget == _id)
+        {
+            _Video.SetActive(true);
+        }
+        else
+        {
+            _Video.SetActive(false);
+        }
+
         if (GameController._alberoCurato && ThirdPersonUnityCharacterController._IDtarget == _id)
         {
             StartCoroutine("Foglie");

@@ -35,7 +35,7 @@ public class Ruspa : MonoBehaviour
             _isDied = true;
             _animator.enabled = false;
             _capo.GetComponent<Animator>().enabled = false;
-            _navMeshAgent.enabled = true;
+            _navMeshAgent.enabled = false;
             StartCoroutine("Deactivate");
 
         }
@@ -83,10 +83,12 @@ public class Ruspa : MonoBehaviour
 
     public IEnumerator Deactivate()
     {
-
-        _cutScene._nextScene = "TitoliDiCoda";
-        yield return new WaitForSecondsRealtime(12);
         
+        _cutScene._nextScene = "TitoliDiCoda";
+        yield return new WaitForSecondsRealtime(10);
+        _capo.SetActive(false);
+        yield return new WaitForSecondsRealtime(2);
+
         _cutScene.LaunchCutScene("end");
 
     }

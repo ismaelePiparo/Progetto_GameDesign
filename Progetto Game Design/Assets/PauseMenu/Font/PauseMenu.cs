@@ -8,14 +8,20 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] public GameObject Pause_Panel;
     [SerializeField] public GameObject Controls_Panel;
 
+    public void Awake()
+    {
+       
+    }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (GameIsPaused)
             {
+                
                 Resume();
             }
             else {
+                
                 Pause();
             }
         }

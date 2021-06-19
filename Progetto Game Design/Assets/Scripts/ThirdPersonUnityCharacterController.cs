@@ -158,7 +158,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
     {
         if (other.CompareTag("Mission"))
         {
-            //Debug.Log("sono dentro il collider");
+            Debug.Log("sono dentro il collider");
             _IDtarget = other.gameObject.GetComponent<MissionID>().ID;
             _inCollider = true;
             //Debug.Log("operaio da Colpire: "+_IDtarget);

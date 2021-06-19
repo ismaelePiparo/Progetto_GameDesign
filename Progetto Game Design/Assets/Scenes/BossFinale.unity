@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1882762, g: 0.19113812, b: 0.19109797, a: 1}
+  m_IndirectSpecularColor: {r: 0.18827605, g: 0.19113812, b: 0.1910977, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1528,6 +1528,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 44910659}
     m_Modifications:
+    - target: {fileID: 1533036767, guid: 5b596fcc11af93c4e92cab7f6c4020a7, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1742639315}
+    - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
+        type: 3}
+      propertyPath: _Video
+      value: 
+      objectReference: {fileID: 1124434134}
     - target: {fileID: 2077362931791657206, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
         type: 3}
       propertyPath: _lives
@@ -2425,6 +2434,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &643060230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 643060231}
+  m_Layer: 0
+  m_Name: Empty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &643060231
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643060230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1079371437}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &667238080
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,6 +4691,7 @@ MonoBehaviour:
   _curato: 0
   _foglieAttive: 0
   foglie: {fileID: 1248658301}
+  _Video: {fileID: 643060230}
 --- !u!1 &1113595827
 GameObject:
   m_ObjectHideFlags: 0
@@ -4749,6 +4789,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113595827}
   m_CullTransparentMesh: 1
+--- !u!1 &1124434134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1533036765, guid: 5b596fcc11af93c4e92cab7f6c4020a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 324190056}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1136758752
 GameObject:
   m_ObjectHideFlags: 0
@@ -7245,7 +7291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1904893442}
-  _lives: 2
+  _lives: 3
   _cutScene: {fileID: 1410019598}
   _animator: {fileID: 1492852658}
   _capo: {fileID: 289818725}

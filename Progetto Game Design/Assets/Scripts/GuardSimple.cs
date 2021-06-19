@@ -20,7 +20,9 @@ public class GuardSimple : MonoBehaviour
     [SerializeField] private float _minAttackDistance = 2f;
     [SerializeField] private float _stoppingDistance = 1f;
     [SerializeField] private int _lives = 3;
-    
+
+
+    [SerializeField] private GameObject _Video;
 
     private GuardState _currentGuardState;
     private NavMeshAgent _navMeshAgent;
@@ -41,10 +43,21 @@ public class GuardSimple : MonoBehaviour
         _animator = GetComponent<Animator>();
         children = GetComponentsInChildren<BoxCollider>();
         _id = GetComponentInParent<MissionID>().ID;
+        _Video.SetActive(false);
     }
 
     void Update()
     {
+
+        if (ThirdPersonUnityCharacterController._IDtarget == _id)
+        {
+            _Video.SetActive(true);
+        }
+        else
+        {
+            _Video.SetActive(false);
+        }
+
         //Debug.Log("IdOperaio " + _id);
         UpdateState();
         CheckTransition();
@@ -114,6 +127,7 @@ public class GuardSimple : MonoBehaviour
                     if (ThirdPersonUnityCharacterController._inCollider)
                     {
                         newGuardState = GuardState.Chase;
+                        //Debug.Log("Pan è nel collider");
                         break;
                     }
                     
@@ -138,6 +152,12 @@ public class GuardSimple : MonoBehaviour
                 if (!IsTargetWithinDistance(_minChaseDistance))
                 {
                     newGuardState = GuardState.Patrol;
+                    break;
+                }
+                if (!ThirdPersonUnityCharacterController._inCollider)
+                {
+                    newGuardState = GuardState.Patrol;
+                    //Debug.Log("Pan è fuori collider");
                     break;
                 }
 
