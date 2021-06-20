@@ -34,7 +34,7 @@ public class ChangeColor : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_safe);
+        Debug.Log("Safe: "+ _safe);
     }
 
     void Awake()

@@ -13,10 +13,10 @@ public class CutScene : MonoBehaviour
 
     //[SerializeField] private  List<GameObject> _operai;
 
-    [SerializeField] private VideoClip Tutorial_1;
+    [SerializeField] private VideoClip IntroCutScene;
     //[SerializeField] private VideoClip Tutorial_2;
-    [SerializeField] private VideoClip EndScene;
-    [SerializeField] private VideoClip EndScene2;
+    [SerializeField] private VideoClip MissionCompletedCutScene;
+    [SerializeField] private VideoClip FailedCutScene;
     [SerializeField] private VideoPlayer Lampo;
     [SerializeField] private VideoPlayer Terremoto;
     [SerializeField] private VideoPlayer Vento;
@@ -26,15 +26,28 @@ public class CutScene : MonoBehaviour
 
 
     [SerializeField] public string _nextScene;
+    [SerializeField] public string _previusScene;
 
     private VideoPlayer vp;
-    private int _lenght,_op;
+    private float _lenght,_op;
     private bool _skipFinal = false;
+    private bool _skipIntro = true;
 
     private Scene currentScene;
-    
-    
 
+
+    private void Awake()
+    {
+        if (IntroCutScene != null)
+        {
+            _skipIntro = true;
+        }
+        else
+        {
+            _skipIntro = false;
+        }
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +59,7 @@ public class CutScene : MonoBehaviour
         if (sceneName == "Tutorial_1")
         {
             Time.timeScale = 0;
-            StartCoroutine("StartCutScene", Tutorial_1);
+            StartCoroutine("StartCutScene", IntroCutScene);
         }
         
     }
@@ -60,28 +73,19 @@ public class CutScene : MonoBehaviour
             if (_skipFinal)
             {
 
-                //if (currentScene.name == "Tutorial_1")
-                //{
-                //    SceneManager.LoadScene("Tutorial_2");
-                //}
-                //else if (currentScene.name == "Tutorial_2")
-                //{
-                //    SceneManager.LoadScene("Accampamento");
-                //}
-                //else if (currentScene.name == "Accampamento")
-                //{
-                //    SceneManager.LoadScene("BossFinale");
-                //}
                 SceneManager.LoadScene(_nextScene);
             }
-            else
+            else if(_skipIntro)
             {
+                _skipIntro = false;
                 Time.timeScale = 1;
                 StopCoroutine("StartCutScene");
                 _mainCam.SetActive(true);
                 _cutScene1.SetActive(false);
                 _canvas.SetActive(true);
             }
+
+
 
         }
     }
@@ -121,13 +125,24 @@ public class CutScene : MonoBehaviour
         }
         if (string.Equals(i, "end"))
         {
-            _skipFinal = true;
-            StartCoroutine("StartEndScene", EndScene);
+
+            if(currentScene.name=="Tutorial_1" || currentScene.name == "Tutorial_2")
+            {
+                _skipFinal = true;
+
+            }
+            else
+            {
+                _skipFinal = false;
+            }
+            
+
+            StartCoroutine("StartEndScene", MissionCompletedCutScene);
         }
         if (string.Equals(i, "failed"))
         {
-            _skipFinal = true;
-            StartCoroutine("StartEndScene", EndScene2);
+            _skipFinal = false;
+            StartCoroutine("ReturnPreviusScene", FailedCutScene);
         }
     }
 
@@ -138,7 +153,7 @@ public class CutScene : MonoBehaviour
         _mainCam.SetActive(false);
         _cutScene1.SetActive(true);
         vp.clip = a;
-        _lenght = (int) a.length;
+        _lenght = (float) a.length;
         vp.Play();
         yield return new WaitForSecondsRealtime(_lenght);
         KeySequence._isCorrect = false;
@@ -161,28 +176,36 @@ public class CutScene : MonoBehaviour
         _mainCam.SetActive(false);
         _cutScene1.SetActive(true);
         vp.clip = a;
-        _lenght = (int)a.length;
+        _lenght = (float) a.length;
         vp.Play();
         yield return new WaitForSecondsRealtime(_lenght);
         KeySequence._isCorrect = false;
         Time.timeScale = 1;
-        //if (currentScene.name == "Tutorial_1")
-        //{
-        //    SceneManager.LoadScene("Tutorial_2");
-        //}
-        //else if(currentScene.name == "Tutorial_2")
-        //{
-        //    SceneManager.LoadScene("Accampamento");
-        //}
-        //else if(currentScene.name == "Accampamento")
-        //{
-        //    SceneManager.LoadScene("BossFinale");
-        //}
+       
         SceneManager.LoadScene(_nextScene);
         
-        _mainCam.SetActive(true);
-        _cutScene1.SetActive(false);
-        _canvas.SetActive(true);
+        //_mainCam.SetActive(true);
+        //_cutScene1.SetActive(false);
+        //_canvas.SetActive(true);
+    }
+
+    IEnumerator ReturnPreviusScene(VideoClip a)
+    {
+        _canvas.SetActive(false);
+        _mainCam.SetActive(false);
+        _cutScene1.SetActive(true);
+        vp.clip = a;
+        _lenght = (float)a.length;
+        vp.Play();
+        yield return new WaitForSecondsRealtime(_lenght);
+        KeySequence._isCorrect = false;
+        Time.timeScale = 1;
+
+        SceneManager.LoadScene(_previusScene);
+
+        //_mainCam.SetActive(true);
+        //_cutScene1.SetActive(false);
+        //_canvas.SetActive(true);
     }
 
 }

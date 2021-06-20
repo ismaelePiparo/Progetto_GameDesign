@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _troppoDistante;
     [SerializeField] private GameObject _melodiaSbagliata;
 
+    [SerializeField] private GameObject _allertTime;
+
     private int i;
     private int _time=2;
     public static bool _decreaseLife = false;
@@ -34,6 +36,9 @@ public class GameController : MonoBehaviour
 
     public static bool _attivoPentagramma = true;
 
+
+    private int seconds = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +47,10 @@ public class GameController : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
 
-        if (sceneName!= "ScenaEsplorazioneBosco_Animale") {
+        if (sceneName!= "ScenaEsplorazioneBosco_Lama" || sceneName != "ScenaEsplorazioneBosco_Vecchio" || sceneName != "ScenaEsplorazioneBosco_Witch") {
             InvokeRepeating("ChangePosition", 0, 2);
         }
-
+        _allertTime.SetActive(false);
        
 
     }
@@ -210,30 +215,39 @@ public class GameController : MonoBehaviour
 
     void ChangePosition()
     {
-        
+        Debug.Log(seconds++);
+        _allertTime.SetActive(false);
         //Compute position for next time
         Vector3 spwanPosition = new Vector3(0, 1, 0);
         MascheraAlbero.transform.localPosition = MascheraAlbero.transform.localPosition - spwanPosition;
+        
+        if(MascheraAlbero.transform.localPosition.y < 35)
+        {
+            _allertTime.SetActive(true);
+        }
+        
+
         if (MascheraAlbero.transform.localPosition.y < 25) 
         {
             Time.timeScale = 0;
 
-            if (SceneManager.GetActiveScene().name == "Tutorial_1")
-            {
-                SceneManager.LoadScene("Tutorial_1");
-                Time.timeScale = 0;
-            }
-            else if (SceneManager.GetActiveScene().name == "Tutorial_2")
-            {
-                SceneManager.LoadScene("Tutorial_2");
-                Time.timeScale = 0;
-            }
-            else 
-            {
-                _cutScene.LaunchCutScene("failed");
-                //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
-            }
+            //if (SceneManager.GetActiveScene().name == "Tutorial_1")
+            //{
+            //    SceneManager.LoadScene("Tutorial_1");
+            //    Time.timeScale = 0;
+            //}
+            //else if (SceneManager.GetActiveScene().name == "Tutorial_2")
+            //{
+            //    SceneManager.LoadScene("Tutorial_2");
+            //    Time.timeScale = 0;
+            //}
+            //else 
+            //{
+            //    _cutScene.LaunchCutScene("failed");
+            //    //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
+            //}
 
+            _cutScene.LaunchCutScene("failed");
             //HAI PERSO!!!
         }
 
@@ -253,25 +267,26 @@ public class GameController : MonoBehaviour
         else if (i == 0)
         {
             //ChangeColor._safe = false;
-            if (SceneManager.GetActiveScene().name == "Tutorial_1")
-            {
-                SceneManager.LoadScene("Tutorial_1");
-                Time.timeScale = 0;
-            }
-            else {
-                _cutScene.LaunchCutScene("failed");
-                //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
-            }
-
+            //if (SceneManager.GetActiveScene().name == "Tutorial_1")
+            //{
+            //    SceneManager.LoadScene("Tutorial_1");
+            //    Time.timeScale = 0;
+            //}
+            //else {
+            //    _cutScene.LaunchCutScene("failed");
+            //    //SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
+            //}
+            _cutScene.LaunchCutScene("failed");
         }
+        
         _colpita = false;
     }
 
     public IEnumerator InutileSuonare()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        //yield return new WaitForSecondsRealtime(1f);
         _inutileSuonare.SetActive(true);
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(2f);
         _inutileSuonare.SetActive(false);
         yield break;
     }
@@ -280,16 +295,16 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         _melodiaSbagliata.SetActive(true);
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(2f);
         _melodiaSbagliata.SetActive(false);
         yield break;
     }
 
     public IEnumerator TroppoLontana()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        //yield return new WaitForSecondsRealtime(1f);
         _troppoDistante.SetActive(true);
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(2f);
         _troppoDistante.SetActive(false);
         yield break;
     }

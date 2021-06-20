@@ -34,7 +34,12 @@ public class Ruspa : MonoBehaviour
         {
             _isDied = true;
             _animator.enabled = false;
-            _capo.GetComponent<Animator>().enabled = false;
+            //_capo.GetComponent<Animator>().enabled = false;
+            if (!ThirdPersonUnityCharacterController._playingFlute)
+            {
+                _capo.GetComponent<Animator>().SetBool("CapoDead", true);
+            }
+            
             _navMeshAgent.enabled = false;
             StartCoroutine("Deactivate");
 
@@ -45,7 +50,7 @@ public class Ruspa : MonoBehaviour
             {
                 _navMeshAgent.enabled = false;
                 _animator.enabled = false;
-                _capo.GetComponent<Animator>().enabled = false;
+                _capo.GetComponent<Animator>().SetBool("Look", true);
             }
             else
             {
@@ -67,7 +72,7 @@ public class Ruspa : MonoBehaviour
     {
 
         _navMeshAgent.enabled = true;
-        _capo.GetComponent<Animator>().enabled = true;
+        _capo.GetComponent<Animator>().SetBool("Look", false);   
         _animator.enabled = true;
         _navMeshAgent.SetDestination(_target.transform.position);
     }
@@ -84,12 +89,13 @@ public class Ruspa : MonoBehaviour
     public IEnumerator Deactivate()
     {
         
-        _cutScene._nextScene = "TitoliDiCoda";
+        //_cutScene._nextScene = "TitoliDiCoda";
         yield return new WaitForSecondsRealtime(10);
+        _capo.GetComponent<Animator>().SetBool("CapoDead", true);
+        yield return new WaitForSecondsRealtime(5);
         _capo.SetActive(false);
-        yield return new WaitForSecondsRealtime(2);
 
-        _cutScene.LaunchCutScene("end");
+        //_cutScene.LaunchCutScene("end");
 
     }
 
