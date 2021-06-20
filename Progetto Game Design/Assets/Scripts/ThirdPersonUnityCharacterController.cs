@@ -39,6 +39,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
 
     public static int _IDtarget = 0;
 
+    public static bool _oggettoTrovato = false;
 
     void Start()
     {
@@ -164,6 +165,8 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             //Debug.Log("operaio da Colpire: "+_IDtarget);
             //Debug.Log("operaio da Colpire: " + other.gameObject.GetComponent<MissionID>().ID);
         }
+
+       
         //if (other.CompareTag("Enemy"))
         //{
         //    Debug.Log("Colpita");
@@ -179,6 +182,7 @@ public class ThirdPersonUnityCharacterController : MonoBehaviour
             _IDtarget = 0;
             _inCollider = false;
         }
+      
     }
 
 
