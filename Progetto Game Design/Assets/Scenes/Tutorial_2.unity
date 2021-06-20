@@ -3867,6 +3867,11 @@ PrefabInstance:
       propertyPath: _cutScene1
       value: 
       objectReference: {fileID: 872314459}
+    - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
+      propertyPath: _nextScene
+      value: ScenaEsplorazioneBosco_Lama
+      objectReference: {fileID: 0}
     - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
       propertyPath: Rise

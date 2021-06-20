@@ -19902,9 +19902,21 @@ PrefabInstance:
       objectReference: {fileID: 2132388929}
     - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
+      propertyPath: EndScene
+      value: 
+      objectReference: {fileID: 32900000, guid: 876c1788604bb8c419224cd144d7bc93,
+        type: 3}
+    - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
       propertyPath: _mainCam
       value: 
       objectReference: {fileID: 1146054608}
+    - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
+      propertyPath: EndScene2
+      value: 
+      objectReference: {fileID: 32900000, guid: 810527914d99e1749b2cb7c2115d6ff2,
+        type: 3}
     - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
       propertyPath: Terremoto
@@ -19915,6 +19927,11 @@ PrefabInstance:
       propertyPath: _cutScene1
       value: 
       objectReference: {fileID: 574987060}
+    - target: {fileID: 5058231530213168094, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
+      propertyPath: _nextScene
+      value: ScenaEsplorazioneBosco_Witch
+      objectReference: {fileID: 0}
     - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
       propertyPath: Rise
@@ -19927,6 +19944,11 @@ PrefabInstance:
       objectReference: {fileID: 1294685269}
     - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
+      propertyPath: wind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
       propertyPath: Flash
       value: 
       objectReference: {fileID: 840041862}
@@ -19935,6 +19957,11 @@ PrefabInstance:
       propertyPath: Quake
       value: 
       objectReference: {fileID: 1866528173}
+    - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
+        type: 3}
+      propertyPath: quake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5058231530213168095, guid: 5abd359dff78bf44398052e90b767c45,
         type: 3}
       propertyPath: _pentagram

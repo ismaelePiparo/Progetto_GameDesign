@@ -18,13 +18,19 @@ EditorBuildSettings:
     path: Assets/Scenes/Livello_1.unity
     guid: 446b76ba8f8f3e04592227e337b792e3
   - enabled: 1
+    path: Assets/Scenes/ScenaEsplorazioneBosco_Vecchio.unity
+    guid: 456d2edb4c125eb468e190359cd52c67
+  - enabled: 1
+    path: Assets/Scenes/ScenaEsplorazioneBosco_Witch.unity
+    guid: b1f1584a6d8e3d741bf7ab179b5c15f7
+  - enabled: 1
     path: Assets/Scenes/Accampamento.unity
     guid: bca5f103256890f4eaf2c4b16e89c7e9
   - enabled: 1
     path: Assets/Scenes/BossFinale.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/ScenaEsplorazioneBosco_Animale.unity
+    path: Assets/Scenes/ScenaEsplorazioneBosco_Lama.unity
     guid: 9afdb41f35a1e7f46ab3b8ac8b402feb
   - enabled: 1
     path: Assets/Scenes/TitoliDiCoda.unity
