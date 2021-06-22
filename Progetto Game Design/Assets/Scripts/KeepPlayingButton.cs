@@ -19,6 +19,6 @@ public class KeepPlayingButton : MonoBehaviour
     }
 
     public void KeepPlaying() {
-        SceneManager.LoadScene("ScenaEsplorazioneBosco_Animale");
+        SceneManager.LoadScene("ScenaEsplorazioneBosco_Lama");
     }
 }
