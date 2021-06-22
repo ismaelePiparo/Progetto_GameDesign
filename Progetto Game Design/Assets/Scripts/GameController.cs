@@ -43,13 +43,19 @@ public class GameController : MonoBehaviour
     void Start()
     {
         i = _lives.Count;
-
+        Cursor.visible = false;
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
 
-        if (sceneName!= "ScenaEsplorazioneBosco_Lama" || sceneName != "ScenaEsplorazioneBosco_Vecchio" || sceneName != "ScenaEsplorazioneBosco_Witch") {
+        if (sceneName== "ScenaEsplorazioneBosco_Lama" || sceneName == "ScenaEsplorazioneBosco_Vecchio" || sceneName == "ScenaEsplorazioneBosco_Witch") 
+        {
+
+        }
+        else
+        {
             InvokeRepeating("ChangePosition", 0, 2);
         }
+        
         _allertTime.SetActive(false);
        
 
@@ -161,13 +167,16 @@ public class GameController : MonoBehaviour
         }
 
         //GESTIONE DEL TAB
-        if (Input.GetKeyDown(KeyCode.Tab) && !ThirdPersonUnityCharacterController._playingFlute && !_musicSheet.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Tab) && !ThirdPersonUnityCharacterController._playingFlute && !_musicSheet.activeSelf && Time.timeScale!=0)
         {
             Time.timeScale = 0;
             _musicSheet.SetActive(true);
         }else if (_musicSheet.activeSelf && Input.GetKeyDown(KeyCode.Tab))
         {
             Time.timeScale = 1;
+            _musicSheet.SetActive(false);
+        }else if(_musicSheet.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
             _musicSheet.SetActive(false);
         }
 
